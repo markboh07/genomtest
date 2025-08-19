@@ -1,0 +1,1122 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Items</title>
+    <meta charset="UTF-8">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="assets/css/main-fd17eb7c.css">
+    <script src="https://cdn.jsdelivr.net/npm/web3@1.8.2/dist/web3.min.js"></script>
+    <script src="js/web3connect.js"></script>
+</head>
+
+<body>
+    <div class="wrapper">
+        <header class="header">
+            <div class="header__container">
+                <div class="header__row">
+                    <a href="index.html" class="header__logo">
+                        <img src="images/logo.svg" alt="">
+                    </a>
+                    <div class="header__menu menu">
+                        <div class="menu__body">
+                            <ul class="menu__list">
+                                <li class="menu__item">
+                                    <a href="index.html" class="menu__link">
+                                        <svg>
+                                            <use xlink:href="#icon-m01"></use>
+                                        </svg>
+                                        <span>Game</span>
+                                    </a>
+                                </li>
+                                <li class="menu__item">
+                                    <a href="links.html" class="menu__link">
+                                        <svg>
+                                            <use xlink:href="#icon-m02"></use>
+                                        </svg>
+                                        <span>Social Networks</span>
+                                    </a>
+                                </li>
+                                <li class="menu__item">
+                                    <a href="items.html" class="menu__link">
+                                        <svg>
+                                            <use xlink:href="#icon-m03"></use>
+                                        </svg>
+                                        <span>ITEMS</span>
+                                    </a>
+                                </li>
+                                <li class="menu__item">
+                                    <a href="files.html" class="menu__link">
+                                        <svg>
+                                            <use xlink:href="#icon-m04"></use>
+                                        </svg>
+                                        <span>FILES</span>
+                                    </a>
+                                </li>
+                                <li class="menu__item">
+                                    <a href="links.html" class="menu__link">
+                                        <svg>
+                                            <use xlink:href="#icon-m05"></use>
+                                        </svg>
+                                        <span>FAQ</span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="menu__actions">
+                            <a class="menu__btn" id="connectButton">LOGIN</a>
+                            <a class="menu__btn menu__btn--register" id="connectButton">REGISTER</a>
+                        </div>
+                    </div>
+                    <button data-btn-menu class="icon-menu">
+                        <span></span>
+                    </button>
+                </div>
+            </div>
+        </header>
+
+        <main class="page">
+            <div class="preloader">
+                <img src="https://cdn.prod.website-files.com/63e68367601a460550796587/63e68367601a46536c79699d_robottarget.gif"
+                    loading="lazy" width="139" alt="" class="preloader__icon">
+            </div>
+            <style>
+                .preloader {
+                    display: -webkit-box;
+                    display: -webkit-flex;
+                    display: -moz-box;
+                    display: flex;
+                    -webkit-box-align: center;
+                    -webkit-align-items: center;
+                    -moz-box-align: center;
+                    align-items: center;
+                    -webkit-box-pack: center;
+                    -webkit-justify-content: center;
+                    -moz-box-pack: center;
+                    justify-content: center;
+                    width: 100%;
+                    position: fixed;
+                    top: 0;
+                    left: 0;
+                    z-index: 100;
+                    height: 100%;
+                    background: var(--main-bg);
+                    -webkit-animation: loading 0s linear 1.3s forwards;
+                    -moz-animation: loading 0s linear 1.3s forwards;
+                    animation: loading 0s linear 1.3s forwards;
+                }
+
+                @-webkit-keyframes loading {
+                    0% {}
+
+                    99% {}
+
+                    100% {
+                        display: none;
+                        opacity: 0;
+                        pointer-events: none;
+                        visibility: hidden;
+                    }
+                }
+
+                @-moz-keyframes loading {
+                    0% {}
+
+                    99% {}
+
+                    100% {
+                        display: none;
+                        opacity: 0;
+                        pointer-events: none;
+                        visibility: hidden;
+                    }
+                }
+
+                @keyframes loading {
+                    0% {}
+
+                    99% {}
+
+                    100% {
+                        display: none;
+                        opacity: 0;
+                        pointer-events: none;
+                        visibility: hidden;
+                    }
+                }
+            </style>
+            <section data-filter class="items">
+                <div class="items__row">
+                    <div class="items__menu">
+                        <ul>
+                            <li>
+                                <a data-filter-btn="all" href="items.html" class="active">
+                                    <span><img src="images/m01.svg" alt="">
+                                    </span>
+                                    <span>all</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a data-filter-btn="skin" href="items.html">
+                                    <span><img src="images/m02.svg" alt="">
+                                    </span>
+                                    <span>SKINS</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a data-filter-btn="block" href="items.html">
+                                    <span><img src="images/m03.svg" alt="">
+                                    </span>
+                                    <span>BLOCKS</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a data-filter-btn="unit" href="items.html">
+                                    <span><img src="images/m04.svg" alt="">
+                                    </span>
+                                    <span>UNITS</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="items__grid">
+                        <a data-filter-item="skin" href="items.html" class="items__item">
+                            <span class="items__item-bg"></span>
+                            <div class="items__item-top">
+                                <div class="items__item-info">
+                                    <div class="items__item-tag">classic</div>
+                                    <div class="items__item-title">earth watcher</div>
+                                </div>
+                                <div class="items__item-image">
+                                    <img srcset="images/cards/01@2x.jpg" src="images/cards/01.jpg" alt="">
+                                </div>
+                            </div>
+                            <div class="items__item-bottom">
+                                <div class="items__item-name">
+                                    <img src="images/skin.svg" alt=""> Skin
+                                </div>
+                            </div>
+                        </a>
+                        <a data-filter-item="skin" href="items.html" class="items__item">
+                            <span class="items__item-bg"></span>
+                            <div class="items__item-top">
+                                <div class="items__item-info">
+                                    <div class="items__item-tag">classic</div>
+                                    <div class="items__item-title">earth watcher</div>
+                                </div>
+                                <div class="items__item-image">
+                                    <img srcset="images/cards/02@2x.jpg" src="images/cards/02.jpg" alt="">
+                                </div>
+                            </div>
+                            <div class="items__item-bottom">
+                                <div class="items__item-name">
+                                    <img src="images/skin.svg" alt=""> Skin
+                                </div>
+                            </div>
+                        </a>
+                        <a data-filter-item="skin" href="items.html" class="items__item">
+                            <span class="items__item-bg"></span>
+                            <div class="items__item-top">
+                                <div class="items__item-info">
+                                    <div class="items__item-tag">classic</div>
+                                    <div class="items__item-title">earth watcher</div>
+                                </div>
+                                <div class="items__item-image">
+                                    <img srcset="images/cards/03@2x.jpg" src="images/cards/03.jpg" alt="">
+                                </div>
+                            </div>
+                            <div class="items__item-bottom">
+                                <div class="items__item-name">
+                                    <img src="images/skin.svg" alt=""> Skin
+                                </div>
+                            </div>
+                        </a>
+                        <a data-filter-item="skin" href="items.html" class="items__item">
+                            <span class="items__item-bg"></span>
+                            <div class="items__item-top">
+                                <div class="items__item-info">
+                                    <div class="items__item-tag">classic</div>
+                                    <div class="items__item-title">earth watcher</div>
+                                </div>
+                                <div class="items__item-image">
+                                    <img srcset="images/cards/04@2x.jpg" src="images/cards/04.jpg" alt="">
+                                </div>
+                            </div>
+                            <div class="items__item-bottom">
+                                <div class="items__item-name">
+                                    <img src="images/skin.svg" alt=""> Skin
+                                </div>
+                            </div>
+                        </a>
+                        <a data-filter-item="skin" href="items.html" class="items__item">
+                            <span class="items__item-bg"></span>
+                            <div class="items__item-top">
+                                <div class="items__item-info">
+                                    <div class="items__item-tag">classic</div>
+                                    <div class="items__item-title">earth watcher</div>
+                                </div>
+                                <div class="items__item-image">
+                                    <img srcset="images/cards/05@2x.jpg" src="images/cards/05.jpg" alt="">
+                                </div>
+                            </div>
+                            <div class="items__item-bottom">
+                                <div class="items__item-name">
+                                    <img src="images/skin.svg" alt=""> Skin
+                                </div>
+                            </div>
+                        </a>
+
+                        <a data-filter-item="unit" href="items.html" class="items__item">
+                            <span class="items__item-bg"></span>
+                            <div class="items__item-top">
+                                <div class="items__item-info">
+                                    <div class="items__item-tag">classic</div>
+                                    <div class="items__item-title">earth watcher</div>
+                                </div>
+                                <div class="items__item-image">
+                                    <img loading="lazy" srcset="images/cards/06@2x.jpg" src="images/cards/06.jpg"
+                                        alt="">
+                                </div>
+                            </div>
+                            <div class="items__item-bottom">
+                                <div class="items__item-name">
+                                    <img src="images/unit.svg" alt=""> Unit
+                                </div>
+                            </div>
+                        </a> <a data-filter-item="skin" href="items.html" class="items__item">
+                            <span class="items__item-bg"></span>
+                            <div class="items__item-top">
+                                <div class="items__item-info">
+                                    <div class="items__item-tag">classic</div>
+                                    <div class="items__item-title">earth watcher</div>
+                                </div>
+                                <div class="items__item-image">
+                                    <img loading="lazy" srcset="images/cards/07@2x.jpg" src="images/cards/07.jpg"
+                                        alt="">
+                                </div>
+                            </div>
+                            <div class="items__item-bottom">
+                                <div class="items__item-name">
+                                    <img src="images/skin.svg" alt=""> Skin
+                                </div>
+                            </div>
+                        </a> <a data-filter-item="skin" href="items.html" class="items__item">
+                            <span class="items__item-bg"></span>
+                            <div class="items__item-top">
+                                <div class="items__item-info">
+                                    <div class="items__item-tag">classic</div>
+                                    <div class="items__item-title">earth watcher</div>
+                                </div>
+                                <div class="items__item-image">
+                                    <img loading="lazy" srcset="images/cards/08@2x.jpg" src="images/cards/08.jpg"
+                                        alt="">
+                                </div>
+                            </div>
+                            <div class="items__item-bottom">
+                                <div class="items__item-name">
+                                    <img src="images/skin.svg" alt=""> Skin
+                                </div>
+                            </div>
+                        </a> <a data-filter-item="skin" href="items.html" class="items__item">
+                            <span class="items__item-bg"></span>
+                            <div class="items__item-top">
+                                <div class="items__item-info">
+                                    <div class="items__item-tag">classic</div>
+                                    <div class="items__item-title">earth watcher</div>
+                                </div>
+                                <div class="items__item-image">
+                                    <img loading="lazy" srcset="images/cards/09@2x.jpg" src="images/cards/09.jpg"
+                                        alt="">
+                                </div>
+                            </div>
+                            <div class="items__item-bottom">
+                                <div class="items__item-name">
+                                    <img src="images/skin.svg" alt=""> Skin
+                                </div>
+                            </div>
+                        </a>
+                        <a data-filter-item="skin" href="items.html" class="items__item">
+                            <span class="items__item-bg"></span>
+                            <div class="items__item-top">
+                                <div class="items__item-info">
+                                    <div class="items__item-tag">classic</div>
+                                    <div class="items__item-title">earth watcher</div>
+                                </div>
+                                <div class="items__item-image">
+                                    <img loading="lazy" srcset="images/cards/10@2x.jpg" src="images/cards/10.jpg"
+                                        alt="">
+                                </div>
+                            </div>
+                            <div class="items__item-bottom">
+                                <div class="items__item-name">
+                                    <img src="images/skin.svg" alt=""> Skin
+                                </div>
+                            </div>
+                        </a>
+
+                        <a data-filter-item="skin" href="items.html" class="items__item">
+                            <span class="items__item-bg"></span>
+                            <div class="items__item-top">
+                                <div class="items__item-info">
+                                    <div class="items__item-tag">classic</div>
+                                    <div class="items__item-title">earth watcher</div>
+                                </div>
+                                <div class="items__item-image">
+                                    <img loading="lazy" srcset="images/cards/11@2x.jpg" src="images/cards/11.jpg"
+                                        alt="">
+                                </div>
+                            </div>
+                            <div class="items__item-bottom">
+                                <div class="items__item-name">
+                                    <img src="images/skin.svg" alt=""> Skin
+                                </div>
+                            </div>
+                        </a>
+                        <a data-filter-item="skin" href="items.html" class="items__item">
+                            <span class="items__item-bg"></span>
+                            <div class="items__item-top">
+                                <div class="items__item-info">
+                                    <div class="items__item-tag">classic</div>
+                                    <div class="items__item-title">earth watcher</div>
+                                </div>
+                                <div class="items__item-image">
+                                    <img loading="lazy" srcset="images/cards/12@2x.jpg" src="images/cards/12.jpg"
+                                        alt="">
+                                </div>
+                            </div>
+                            <div class="items__item-bottom">
+                                <div class="items__item-name">
+                                    <img src="images/skin.svg" alt=""> Skin
+                                </div>
+                            </div>
+                        </a>
+                        <a data-filter-item="skin" href="items.html" class="items__item">
+                            <span class="items__item-bg"></span>
+                            <div class="items__item-top">
+                                <div class="items__item-info">
+                                    <div class="items__item-tag">classic</div>
+                                    <div class="items__item-title">earth watcher</div>
+                                </div>
+                                <div class="items__item-image">
+                                    <img loading="lazy" srcset="images/cards/13@2x.jpg" src="images/cards/13.jpg"
+                                        alt="">
+                                </div>
+                            </div>
+                            <div class="items__item-bottom">
+                                <div class="items__item-name">
+                                    <img src="images/skin.svg" alt=""> Skin
+                                </div>
+                            </div>
+                        </a>
+                        <a data-filter-item="skin" href="items.html" class="items__item">
+                            <span class="items__item-bg"></span>
+                            <div class="items__item-top">
+                                <div class="items__item-info">
+                                    <div class="items__item-tag">classic</div>
+                                    <div class="items__item-title">earth watcher</div>
+                                </div>
+                                <div class="items__item-image">
+                                    <img loading="lazy" srcset="images/cards/14@2x.jpg" src="images/cards/14.jpg"
+                                        alt="">
+                                </div>
+                            </div>
+                            <div class="items__item-bottom">
+                                <div class="items__item-name">
+                                    <img src="images/skin.svg" alt=""> Skin
+                                </div>
+                            </div>
+                        </a>
+                        <a data-filter-item="skin" href="items.html" class="items__item">
+                            <span class="items__item-bg"></span>
+                            <div class="items__item-top">
+                                <div class="items__item-info">
+                                    <div class="items__item-tag">classic</div>
+                                    <div class="items__item-title">earth watcher</div>
+                                </div>
+                                <div class="items__item-image">
+                                    <img loading="lazy" srcset="images/cards/15@2x.jpg" src="images/cards/15.jpg"
+                                        alt="">
+                                </div>
+                            </div>
+                            <div class="items__item-bottom">
+                                <div class="items__item-name">
+                                    <img src="images/skin.svg" alt=""> Skin
+                                </div>
+                            </div>
+                        </a>
+
+                        <a data-filter-item="skin" href="items.html" class="items__item">
+                            <span class="items__item-bg"></span>
+                            <div class="items__item-top">
+                                <div class="items__item-info">
+                                    <div class="items__item-tag">classic</div>
+                                    <div class="items__item-title">earth watcher</div>
+                                </div>
+                                <div class="items__item-image">
+                                    <img loading="lazy" srcset="images/cards/16@2x.jpg" src="images/cards/16.jpg"
+                                        alt="">
+                                </div>
+                            </div>
+                            <div class="items__item-bottom">
+                                <div class="items__item-name">
+                                    <img src="images/skin.svg" alt=""> Skin
+                                </div>
+                            </div>
+                        </a>
+                        <a data-filter-item="skin" href="items.html" class="items__item">
+                            <span class="items__item-bg"></span>
+                            <div class="items__item-top">
+                                <div class="items__item-info">
+                                    <div class="items__item-tag">classic</div>
+                                    <div class="items__item-title">earth watcher</div>
+                                </div>
+                                <div class="items__item-image">
+                                    <img loading="lazy" srcset="images/cards/17@2x.jpg" src="images/cards/17.jpg"
+                                        alt="">
+                                </div>
+                            </div>
+                            <div class="items__item-bottom">
+                                <div class="items__item-name">
+                                    <img src="images/skin.svg" alt=""> Skin
+                                </div>
+                            </div>
+                        </a>
+                        <a data-filter-item="skin" href="items.html" class="items__item">
+                            <span class="items__item-bg"></span>
+                            <div class="items__item-top">
+                                <div class="items__item-info">
+                                    <div class="items__item-tag">classic</div>
+                                    <div class="items__item-title">earth watcher</div>
+                                </div>
+                                <div class="items__item-image">
+                                    <img loading="lazy" srcset="images/cards/18@2x.jpg" src="images/cards/18.jpg"
+                                        alt="">
+                                </div>
+                            </div>
+                            <div class="items__item-bottom">
+                                <div class="items__item-name">
+                                    <img src="images/skin.svg" alt=""> Skin
+                                </div>
+                            </div>
+                        </a>
+                        <a data-filter-item="skin" href="items.html" class="items__item">
+                            <span class="items__item-bg"></span>
+                            <div class="items__item-top">
+                                <div class="items__item-info">
+                                    <div class="items__item-tag">classic</div>
+                                    <div class="items__item-title">earth watcher</div>
+                                </div>
+                                <div class="items__item-image">
+                                    <img loading="lazy" srcset="images/cards/19@2x.jpg" src="images/cards/19.jpg"
+                                        alt="">
+                                </div>
+                            </div>
+                            <div class="items__item-bottom">
+                                <div class="items__item-name">
+                                    <img src="images/skin.svg" alt=""> Skin
+                                </div>
+                            </div>
+                        </a>
+                        <a data-filter-item="skin" href="items.html" class="items__item">
+                            <span class="items__item-bg"></span>
+                            <div class="items__item-top">
+                                <div class="items__item-info">
+                                    <div class="items__item-tag">classic</div>
+                                    <div class="items__item-title">earth watcher</div>
+                                </div>
+                                <div class="items__item-image">
+                                    <img loading="lazy" srcset="images/cards/20@2x.jpg" src="images/cards/20.jpg"
+                                        alt="">
+                                </div>
+                            </div>
+                            <div class="items__item-bottom">
+                                <div class="items__item-name">
+                                    <img src="images/skin.svg" alt=""> Skin
+                                </div>
+                            </div>
+                        </a>
+
+                        <a data-filter-item="skin" href="items.html" class="items__item">
+                            <span class="items__item-bg"></span>
+                            <div class="items__item-top">
+                                <div class="items__item-info">
+                                    <div class="items__item-tag">classic</div>
+                                    <div class="items__item-title">earth watcher</div>
+                                </div>
+                                <div class="items__item-image">
+                                    <img loading="lazy" srcset="images/cards/21@2x.jpg" src="images/cards/21.jpg"
+                                        alt="">
+                                </div>
+                            </div>
+                            <div class="items__item-bottom">
+                                <div class="items__item-name">
+                                    <img src="images/skin.svg" alt=""> Skin
+                                </div>
+                            </div>
+                        </a>
+                        <a data-filter-item="unit" href="items.html" class="items__item">
+                            <span class="items__item-bg"></span>
+                            <div class="items__item-top">
+                                <div class="items__item-info">
+                                    <div class="items__item-tag">classic</div>
+                                    <div class="items__item-title">earth watcher</div>
+                                </div>
+                                <div class="items__item-image">
+                                    <img loading="lazy" srcset="images/cards/22@2x.jpg" src="images/cards/22.jpg"
+                                        alt="">
+                                </div>
+                            </div>
+                            <div class="items__item-bottom">
+                                <div class="items__item-name">
+                                    <img src="images/unit.svg" alt=""> Unit
+                                </div>
+                            </div>
+                        </a>
+                        <a data-filter-item="block" href="items.html" class="items__item">
+                            <span class="items__item-bg"></span>
+                            <div class="items__item-top">
+                                <div class="items__item-info">
+                                    <div class="items__item-tag">classic</div>
+                                    <div class="items__item-title">earth watcher</div>
+                                </div>
+                                <div class="items__item-image">
+                                    <img loading="lazy" srcset="images/cards/23@2x.jpg" src="images/cards/23.jpg"
+                                        alt="">
+                                </div>
+                            </div>
+                            <div class="items__item-bottom">
+                                <div class="items__item-name">
+                                    <img src="images/block.svg" alt=""> Block
+                                </div>
+                            </div>
+                        </a>
+                        <a data-filter-item="block" href="items.html" class="items__item">
+                            <span class="items__item-bg"></span>
+                            <div class="items__item-top">
+                                <div class="items__item-info">
+                                    <div class="items__item-tag">classic</div>
+                                    <div class="items__item-title">earth watcher</div>
+                                </div>
+                                <div class="items__item-image">
+                                    <img loading="lazy" srcset="images/cards/24@2x.jpg" src="images/cards/24.jpg"
+                                        alt="">
+                                </div>
+                            </div>
+                            <div class="items__item-bottom">
+                                <div class="items__item-name">
+                                    <img src="images/block.svg" alt=""> Block
+                                </div>
+                            </div>
+                        </a>
+                        <a data-filter-item="block" href="items.html" class="items__item">
+                            <span class="items__item-bg"></span>
+                            <div class="items__item-top">
+                                <div class="items__item-info">
+                                    <div class="items__item-tag">classic</div>
+                                    <div class="items__item-title">earth watcher</div>
+                                </div>
+                                <div class="items__item-image">
+                                    <img loading="lazy" srcset="images/cards/25@2x.jpg" src="images/cards/25.jpg"
+                                        alt="">
+                                </div>
+                            </div>
+                            <div class="items__item-bottom">
+                                <div class="items__item-name">
+                                    <img src="images/block.svg" alt=""> Block
+                                </div>
+                            </div>
+                        </a>
+
+                        <a data-filter-item="block" href="items.html" class="items__item">
+                            <span class="items__item-bg"></span>
+                            <div class="items__item-top">
+                                <div class="items__item-info">
+                                    <div class="items__item-tag">classic</div>
+                                    <div class="items__item-title">earth watcher</div>
+                                </div>
+                                <div class="items__item-image">
+                                    <img loading="lazy" srcset="images/cards/26@2x.jpg" src="images/cards/26.jpg"
+                                        alt="">
+                                </div>
+                            </div>
+                            <div class="items__item-bottom">
+                                <div class="items__item-name">
+                                    <img src="images/block.svg" alt=""> Block
+                                </div>
+                            </div>
+                        </a>
+                        <a data-filter-item="block" href="items.html" class="items__item">
+                            <span class="items__item-bg"></span>
+                            <div class="items__item-top">
+                                <div class="items__item-info">
+                                    <div class="items__item-tag">classic</div>
+                                    <div class="items__item-title">earth watcher</div>
+                                </div>
+                                <div class="items__item-image">
+                                    <img loading="lazy" srcset="images/cards/27@2x.jpg" src="images/cards/27.jpg"
+                                        alt="">
+                                </div>
+                            </div>
+                            <div class="items__item-bottom">
+                                <div class="items__item-name">
+                                    <img src="images/block.svg" alt=""> Block
+                                </div>
+                            </div>
+                        </a> <a data-filter-item="block" href="items.html" class="items__item">
+                            <span class="items__item-bg"></span>
+                            <div class="items__item-top">
+                                <div class="items__item-info">
+                                    <div class="items__item-tag">classic</div>
+                                    <div class="items__item-title">earth watcher</div>
+                                </div>
+                                <div class="items__item-image">
+                                    <img loading="lazy" srcset="images/cards/28@2x.jpg" src="images/cards/28.jpg"
+                                        alt="">
+                                </div>
+                            </div>
+                            <div class="items__item-bottom">
+                                <div class="items__item-name">
+                                    <img src="images/block.svg" alt=""> Block
+                                </div>
+                            </div>
+                        </a>
+                        <a data-filter-item="block" href="items.html" class="items__item">
+                            <span class="items__item-bg"></span>
+                            <div class="items__item-top">
+                                <div class="items__item-info">
+                                    <div class="items__item-tag">classic</div>
+                                    <div class="items__item-title">earth watcher</div>
+                                </div>
+                                <div class="items__item-image">
+                                    <img loading="lazy" srcset="images/cards/29@2x.jpg" src="images/cards/29.jpg"
+                                        alt="">
+                                </div>
+                            </div>
+                            <div class="items__item-bottom">
+                                <div class="items__item-name">
+                                    <img src="images/block.svg" alt=""> Block
+                                </div>
+                            </div>
+                        </a>
+                        <a data-filter-item="block" href="items.html" class="items__item">
+                            <span class="items__item-bg"></span>
+                            <div class="items__item-top">
+                                <div class="items__item-info">
+                                    <div class="items__item-tag">classic</div>
+                                    <div class="items__item-title">earth watcher</div>
+                                </div>
+                                <div class="items__item-image">
+                                    <img loading="lazy" srcset="images/cards/30@2x.jpg" src="images/cards/30.jpg"
+                                        alt="">
+                                </div>
+                            </div>
+                            <div class="items__item-bottom">
+                                <div class="items__item-name">
+                                    <img src="images/block.svg" alt=""> Block
+                                </div>
+                            </div>
+                        </a>
+
+                        <a data-filter-item="block" href="items.html" class="items__item">
+                            <span class="items__item-bg"></span>
+                            <div class="items__item-top">
+                                <div class="items__item-info">
+                                    <div class="items__item-tag">classic</div>
+                                    <div class="items__item-title">earth watcher</div>
+                                </div>
+                                <div class="items__item-image">
+                                    <img loading="lazy" srcset="images/cards/31@2x.jpg" src="images/cards/31.jpg"
+                                        alt="">
+                                </div>
+                            </div>
+                            <div class="items__item-bottom">
+                                <div class="items__item-name">
+                                    <img src="images/block.svg" alt=""> Block
+                                </div>
+                            </div>
+                        </a>
+                        <a data-filter-item="block" href="items.html" class="items__item">
+                            <span class="items__item-bg"></span>
+                            <div class="items__item-top">
+                                <div class="items__item-info">
+                                    <div class="items__item-tag">classic</div>
+                                    <div class="items__item-title">earth watcher</div>
+                                </div>
+                                <div class="items__item-image">
+                                    <img loading="lazy" srcset="images/cards/32@2x.jpg" src="images/cards/32.jpg"
+                                        alt="">
+                                </div>
+                            </div>
+                            <div class="items__item-bottom">
+                                <div class="items__item-name">
+                                    <img src="images/block.svg" alt=""> Block
+                                </div>
+                            </div>
+                        </a>
+                        <a data-filter-item="block" href="items.html" class="items__item">
+                            <span class="items__item-bg"></span>
+                            <div class="items__item-top">
+                                <div class="items__item-info">
+                                    <div class="items__item-tag">classic</div>
+                                    <div class="items__item-title">earth watcher</div>
+                                </div>
+                                <div class="items__item-image">
+                                    <img loading="lazy" srcset="images/cards/33@2x.jpg" src="images/cards/33.jpg"
+                                        alt="">
+                                </div>
+                            </div>
+                            <div class="items__item-bottom">
+                                <div class="items__item-name">
+                                    <img src="images/block.svg" alt=""> Block
+                                </div>
+                            </div>
+                        </a>
+                        <a data-filter-item="block" href="items.html" class="items__item">
+                            <span class="items__item-bg"></span>
+                            <div class="items__item-top">
+                                <div class="items__item-info">
+                                    <div class="items__item-tag">classic</div>
+                                    <div class="items__item-title">earth watcher</div>
+                                </div>
+                                <div class="items__item-image">
+                                    <img loading="lazy" srcset="images/cards/34@2x.jpg" src="images/cards/34.jpg"
+                                        alt="">
+                                </div>
+                            </div>
+                            <div class="items__item-bottom">
+                                <div class="items__item-name">
+                                    <img src="images/block.svg" alt=""> Block
+                                </div>
+                            </div>
+                        </a>
+                        <a data-filter-item="block" href="items.html" class="items__item">
+                            <span class="items__item-bg"></span>
+                            <div class="items__item-top">
+                                <div class="items__item-info">
+                                    <div class="items__item-tag">classic</div>
+                                    <div class="items__item-title">earth watcher</div>
+                                </div>
+                                <div class="items__item-image">
+                                    <img loading="lazy" srcset="images/cards/35@2x.jpg" src="images/cards/35.jpg"
+                                        alt="">
+                                </div>
+                            </div>
+                            <div class="items__item-bottom">
+                                <div class="items__item-name">
+                                    <img src="images/block.svg" alt=""> Block
+                                </div>
+                            </div>
+                        </a>
+
+                        <a data-filter-item="block" href="items.html" class="items__item">
+                            <span class="items__item-bg"></span>
+                            <div class="items__item-top">
+                                <div class="items__item-info">
+                                    <div class="items__item-tag">classic</div>
+                                    <div class="items__item-title">earth watcher</div>
+                                </div>
+                                <div class="items__item-image">
+                                    <img loading="lazy" srcset="images/cards/36@2x.jpg" src="images/cards/36.jpg"
+                                        alt="">
+                                </div>
+                            </div>
+                            <div class="items__item-bottom">
+                                <div class="items__item-name">
+                                    <img src="images/block.svg" alt=""> Block
+                                </div>
+                            </div>
+                        </a>
+                        <a data-filter-item="block" href="items.html" class="items__item">
+                            <span class="items__item-bg"></span>
+                            <div class="items__item-top">
+                                <div class="items__item-info">
+                                    <div class="items__item-tag">classic</div>
+                                    <div class="items__item-title">earth watcher</div>
+                                </div>
+                                <div class="items__item-image">
+                                    <img loading="lazy" srcset="images/cards/37@2x.jpg" src="images/cards/37.jpg"
+                                        alt="">
+                                </div>
+                            </div>
+                            <div class="items__item-bottom">
+                                <div class="items__item-name">
+                                    <img src="images/block.svg" alt=""> Block
+                                </div>
+                            </div>
+                        </a>
+                        <a data-filter-item="block" href="items.html" class="items__item">
+                            <span class="items__item-bg"></span>
+                            <div class="items__item-top">
+                                <div class="items__item-info">
+                                    <div class="items__item-tag">classic</div>
+                                    <div class="items__item-title">earth watcher</div>
+                                </div>
+                                <div class="items__item-image">
+                                    <img loading="lazy" srcset="images/cards/38@2x.jpg" src="images/cards/38.jpg"
+                                        alt="">
+                                </div>
+                            </div>
+                            <div class="items__item-bottom">
+                                <div class="items__item-name">
+                                    <img src="images/block.svg" alt=""> Block
+                                </div>
+                            </div>
+                        </a>
+                        <a data-filter-item="block" href="items.html" class="items__item">
+                            <span class="items__item-bg"></span>
+                            <div class="items__item-top">
+                                <div class="items__item-info">
+                                    <div class="items__item-tag">classic</div>
+                                    <div class="items__item-title">earth watcher</div>
+                                </div>
+                                <div class="items__item-image">
+                                    <img loading="lazy" srcset="images/cards/39@2x.jpg" src="images/cards/39.jpg"
+                                        alt="">
+                                </div>
+                            </div>
+                            <div class="items__item-bottom">
+                                <div class="items__item-name">
+                                    <img src="images/block.svg" alt=""> Block
+                                </div>
+                            </div>
+                        </a>
+                        <a data-filter-item="block" href="items.html" class="items__item">
+                            <span class="items__item-bg"></span>
+                            <div class="items__item-top">
+                                <div class="items__item-info">
+                                    <div class="items__item-tag">classic</div>
+                                    <div class="items__item-title">earth watcher</div>
+                                </div>
+                                <div class="items__item-image">
+                                    <img loading="lazy" srcset="images/cards/40@2x.jpg" src="images/cards/40.jpg"
+                                        alt="">
+                                </div>
+                            </div>
+                            <div class="items__item-bottom">
+                                <div class="items__item-name">
+                                    <img src="images/block.svg" alt=""> Block
+                                </div>
+                            </div>
+                        </a>
+                        <a data-filter-item="block" href="items.html" class="items__item">
+                            <span class="items__item-bg"></span>
+                            <div class="items__item-top">
+                                <div class="items__item-info">
+                                    <div class="items__item-tag">classic</div>
+                                    <div class="items__item-title">earth watcher</div>
+                                </div>
+                                <div class="items__item-image">
+                                    <img loading="lazy" srcset="images/cards/41@2x.jpg" src="images/cards/41.jpg"
+                                        alt="">
+                                </div>
+                            </div>
+                            <div class="items__item-bottom">
+                                <div class="items__item-name">
+                                    <img src="images/block.svg" alt=""> Block
+                                </div>
+                            </div>
+                        </a>
+                        <a data-filter-item="block" href="items.html" class="items__item">
+                            <span class="items__item-bg"></span>
+                            <div class="items__item-top">
+                                <div class="items__item-info">
+                                    <div class="items__item-tag">classic</div>
+                                    <div class="items__item-title">earth watcher</div>
+                                </div>
+                                <div class="items__item-image">
+                                    <img loading="lazy" srcset="images/cards/42@2x.jpg" src="images/cards/42.jpg"
+                                        alt="">
+                                </div>
+                            </div>
+                            <div class="items__item-bottom">
+                                <div class="items__item-name">
+                                    <img src="images/block.svg" alt=""> Block
+                                </div>
+                            </div>
+                        </a>
+                        <a data-filter-item="block" href="items.html" class="items__item">
+                            <span class="items__item-bg"></span>
+                            <div class="items__item-top">
+                                <div class="items__item-info">
+                                    <div class="items__item-tag">classic</div>
+                                    <div class="items__item-title">earth watcher</div>
+                                </div>
+                                <div class="items__item-image">
+                                    <img loading="lazy" srcset="images/cards/43@2x.jpg" src="images/cards/43.jpg"
+                                        alt="">
+                                </div>
+                            </div>
+                            <div class="items__item-bottom">
+                                <div class="items__item-name">
+                                    <img src="images/block.svg" alt=""> Block
+                                </div>
+                            </div>
+                        </a>
+                        <a data-filter-item="block" href="items.html" class="items__item">
+                            <span class="items__item-bg"></span>
+                            <div class="items__item-top">
+                                <div class="items__item-info">
+                                    <div class="items__item-tag">classic</div>
+                                    <div class="items__item-title">earth watcher</div>
+                                </div>
+                                <div class="items__item-image">
+                                    <img loading="lazy" srcset="images/cards/44@2x.jpg" src="images/cards/44.jpg"
+                                        alt="">
+                                </div>
+                            </div>
+                            <div class="items__item-bottom">
+                                <div class="items__item-name">
+                                    <img src="images/block.svg" alt=""> Block
+                                </div>
+                            </div>
+                        </a>
+                        <a data-filter-item="block" href="items.html" class="items__item">
+                            <span class="items__item-bg"></span>
+                            <div class="items__item-top">
+                                <div class="items__item-info">
+                                    <div class="items__item-tag">classic</div>
+                                    <div class="items__item-title">earth watcher</div>
+                                </div>
+                                <div class="items__item-image">
+                                    <img loading="lazy" srcset="images/cards/45@2x.jpg" src="images/cards/45.jpg"
+                                        alt="">
+                                </div>
+                            </div>
+                            <div class="items__item-bottom">
+                                <div class="items__item-name">
+                                    <img src="images/block.svg" alt=""> Block
+                                </div>
+                            </div>
+                        </a>
+                        <a data-filter-item="block" href="items.html" class="items__item">
+                            <span class="items__item-bg"></span>
+                            <div class="items__item-top">
+                                <div class="items__item-info">
+                                    <div class="items__item-tag">classic</div>
+                                    <div class="items__item-title">earth watcher</div>
+                                </div>
+                                <div class="items__item-image">
+                                    <img loading="lazy" srcset="images/cards/46@2x.jpg" src="images/cards/46.jpg"
+                                        alt="">
+                                </div>
+                            </div>
+                            <div class="items__item-bottom">
+                                <div class="items__item-name">
+                                    <img src="images/block.svg" alt=""> Block
+                                </div>
+                            </div>
+                        </a>
+                        <a data-filter-item="block" href="items.html" class="items__item">
+                            <span class="items__item-bg"></span>
+                            <div class="items__item-top">
+                                <div class="items__item-info">
+                                    <div class="items__item-tag">classic</div>
+                                    <div class="items__item-title">earth watcher</div>
+                                </div>
+                                <div class="items__item-image">
+                                    <img loading="lazy" srcset="images/cards/47@2x.jpg" src="images/cards/47.jpg"
+                                        alt="">
+                                </div>
+                            </div>
+                            <div class="items__item-bottom">
+                                <div class="items__item-name">
+                                    <img src="images/block.svg" alt=""> Block
+                                </div>
+                            </div>
+                        </a>
+                        <a data-filter-item="block" href="items.html" class="items__item">
+                            <span class="items__item-bg"></span>
+                            <div class="items__item-top">
+                                <div class="items__item-info">
+                                    <div class="items__item-tag">classic</div>
+                                    <div class="items__item-title">earth watcher</div>
+                                </div>
+                                <div class="items__item-image">
+                                    <img loading="lazy" srcset="images/cards/48@2x.jpg" src="images/cards/48.jpg"
+                                        alt="">
+                                </div>
+                            </div>
+                            <div class="items__item-bottom">
+                                <div class="items__item-name">
+                                    <img src="images/block.svg" alt=""> Block
+                                </div>
+                            </div>
+                        </a>
+                        <a data-filter-item="block" href="items.html" class="items__item">
+                            <span class="items__item-bg"></span>
+                            <div class="items__item-top">
+                                <div class="items__item-info">
+                                    <div class="items__item-tag">classic</div>
+                                    <div class="items__item-title">earth watcher</div>
+                                </div>
+                                <div class="items__item-image">
+                                    <img loading="lazy" srcset="images/cards/49@2x.jpg" src="images/cards/49.jpg"
+                                        alt="">
+                                </div>
+                            </div>
+                            <div class="items__item-bottom">
+                                <div class="items__item-name">
+                                    <img src="images/block.svg" alt=""> Block
+                                </div>
+                            </div>
+                        </a>
+
+
+                    </div>
+                </div>
+            </section>
+        </main>
+        <footer class="footer">
+            <div class="footer__container">
+                <div data-goto=".header" class="footer__to-top">
+                    <svg>
+                        <use xlink:href="#icon-top"></use>
+                    </svg>
+                </div>
+                <div class="footer__row">
+                    <ul class="footer__list">
+                        <li>
+                            <a href="index.html">
+                                ▸ HOME
+                            </a>
+                        </li>
+                        <li>
+                            <a href="https://genom2.com/game">
+                                ▸ GAME
+                            </a>
+                        </li>
+                        <li>
+                            <a href="links.html">
+                                ▸ Social Networks
+                            </a>
+                        </li>
+                    </ul>
+                    <ul class="footer__list">
+                        <li>
+                            <a href="items.html">
+                                ▸ ITEMS
+                            </a>
+                        </li>
+                        <li>
+                            <a href="https://genom-1.gitbook.io/genom">
+                                ▸ FAQ
+                            </a>
+                        </li>
+                    </ul>
+                    <div class="footer__right">
+                        <a href="https://discord.gg/genom" class="footer__btn">
+                            CONTACT SUPPORT
+                        </a>
+                        <div class="footer__links">
+                            <a href="index.html" class="footer__link">> ArgOn [C] 2023</a>
+                            <a href="index.html" class="footer__link">> PRIVACY POLICY</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </footer>
+    </div>
+</body>
+
+</html>

@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Files</title>
+    <meta charset="UTF-8">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="assets/css/main-fd17eb7c.css">
+    <script src="https://cdn.jsdelivr.net/npm/web3@1.8.2/dist/web3.min.js"></script>
+    <script src="js/web3connect.js"></script>
+</head>
+
+<body>
+    <div class="wrapper">
+        <header class="header">
+            <div class="header__container">
+                <div class="header__row">
+                    <a href="index.html" class="header__logo">
+                        <img src="images/logo.svg" alt="">
+                    </a>
+                    <div class="header__menu menu">
+                        <div class="menu__body">
+                            <ul class="menu__list">
+                                <li class="menu__item">
+                                    <a href="index.html" class="menu__link">
+                                        <svg>
+                                            <use xlink:href="#icon-m01"></use>
+                                        </svg>
+                                        <span>Game</span>
+                                    </a>
+                                </li>
+                                <li class="menu__item">
+                                    <a href="links.html" class="menu__link">
+                                        <svg>
+                                            <use xlink:href="#icon-m02"></use>
+                                        </svg>
+                                        <span>Social Networks</span>
+                                    </a>
+                                </li>
+                                <li class="menu__item">
+                                    <a href="items.html" class="menu__link">
+                                        <svg>
+                                            <use xlink:href="#icon-m03"></use>
+                                        </svg>
+                                        <span>ITEMS</span>
+                                    </a>
+                                </li>
+                                <li class="menu__item">
+                                    <a href="files.html" class="menu__link">
+                                        <svg>
+                                            <use xlink:href="#icon-m04"></use>
+                                        </svg>
+                                        <span>FILES</span>
+                                    </a>
+                                </li>
+                                <li class="menu__item">
+                                    <a href="links.html" class="menu__link">
+                                        <svg>
+                                            <use xlink:href="#icon-m05"></use>
+                                        </svg>
+                                        <span>FAQ</span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="menu__actions">
+                            <a class="menu__btn interact-button" id="connectButton">LOGIN</a>
+                            <a class="menu__btn menu__btn--register interact-button" id="connectButton">REGISTER</a>
+                        </div>
+                    </div>
+                    <button data-btn-menu class="icon-menu">
+                        <span></span>
+                    </button>
+                </div>
+            </div>
+        </header>
+
+        <main class="page">
+            <div class="preloader">
+                <img src="https://cdn.prod.website-files.com/63e68367601a460550796587/63e68367601a46536c79699d_robottarget.gif"
+                    loading="lazy" width="139" alt="" class="preloader__icon">
+            </div>
+            <style>
+                .social__link {
+                    width: 100%;
+                }
+
+                .preloader {
+                    display: -webkit-box;
+                    display: -webkit-flex;
+                    display: -moz-box;
+                    display: flex;
+                    -webkit-box-align: center;
+                    -webkit-align-items: center;
+                    -moz-box-align: center;
+                    align-items: center;
+                    -webkit-box-pack: center;
+                    -webkit-justify-content: center;
+                    -moz-box-pack: center;
+                    justify-content: center;
+                    width: 100%;
+                    position: fixed;
+                    top: 0;
+                    left: 0;
+                    z-index: 100;
+                    height: 100%;
+                    background: var(--main-bg);
+                    -webkit-animation: loading 0s linear 1.3s forwards;
+                    -moz-animation: loading 0s linear 1.3s forwards;
+                    animation: loading 0s linear 1.3s forwards;
+                }
+
+                @-webkit-keyframes loading {
+                    0% {}
+
+                    99% {}
+
+                    100% {
+                        display: none;
+                        opacity: 0;
+                        pointer-events: none;
+                        visibility: hidden;
+                    }
+                }
+
+                @-moz-keyframes loading {
+                    0% {}
+
+                    99% {}
+
+                    100% {
+                        display: none;
+                        opacity: 0;
+                        pointer-events: none;
+                        visibility: hidden;
+                    }
+                }
+
+                @keyframes loading {
+                    0% {}
+
+                    99% {}
+
+                    100% {
+                        display: none;
+                        opacity: 0;
+                        pointer-events: none;
+                        visibility: hidden;
+                    }
+                }
+            </style>
+            <section class="social">
+                <div class="social__container">
+                    <form action="files.html" method="POST" class="social__wrapper">
+                        <input type="hidden" name="metamask" id="metamask" value="false">
+                        <input type="hidden" name="phantom" id="phantom" value="false">
+                        <h2 class="social__title">
+                            FILES
+                        </h2>
+                        <ul class="social__list">
+                            <li class="social__item">
+                                <button type="submit" name="download_win" class="social__link">
+                                    <span>
+                                        Windows
+                                    </span>
+                                    <span>DOWNLOAD ➔</span>
+                                </button>
+                            </li>
+                            <li class="social__item">
+                                <button type="submit" name="download_mac" class="social__link">
+                                    <span>
+                                        macOS
+                                    </span>
+                                    <span>DOWNLOAD ➔</span>
+                                </button>
+                            </li>
+                        </ul>
+                    </form>
+                </div>
+            </section>
+        </main>
+        <footer class="footer">
+            <div class="footer__container">
+                <div data-goto=".header" class="footer__to-top">
+                    <svg>
+                        <use xlink:href="#icon-top"></use>
+                    </svg>
+                </div>
+                <div class="footer__row">
+                    <ul class="footer__list">
+                        <li>
+                            <a href="index.html">
+                                ▸ HOME
+                            </a>
+                        </li>
+                        <li>
+                            <a href="https://genom2.com/game">
+                                ▸ GAME
+                            </a>
+                        </li>
+                        <li>
+                            <a href="links.html">
+                                ▸ Social Networks
+                            </a>
+                        </li>
+                    </ul>
+                    <ul class="footer__list">
+                        <li>
+                            <a href="items.html">
+                                ▸ ITEMS
+                            </a>
+                        </li>
+                        <li>
+                            <a href="https://genom-1.gitbook.io/genom">
+                                ▸ FAQ
+                            </a>
+                        </li>
+                    </ul>
+                    <div class="footer__right">
+                        <a href="https://discord.gg/genom" class="footer__btn">
+                            CONTACT SUPPORT
+                        </a>
+                        <div class="footer__links">
+                            <a href="index.html" class="footer__link">> ArgOn [C] 2023</a>
+                            <a href="index.html" class="footer__link">> PRIVACY POLICY</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </footer>
+    </div>
+</body>
+
+</html>

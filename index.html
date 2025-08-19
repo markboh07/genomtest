@@ -1,0 +1,460 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Homepage 2</title>
+    <meta charset="UTF-8">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="assets/css/main-fd17eb7c.css">
+    <script src="https://cdn.jsdelivr.net/npm/web3@1.8.2/dist/web3.min.js"></script>
+    <script src="js/web3connect.js"></script>
+</head>
+
+<body>
+    <div class="wrapper">
+        <header class="header">
+            <div class="header__container">
+                <div class="header__row">
+                    <a href="index.html" class="header__logo">
+                        <img src="images/logo.svg" alt="">
+                    </a>
+                    <div class="header__menu menu">
+                        <div class="menu__body">
+                            <ul class="menu__list">
+                                <li class="menu__item">
+                                    <a href="index.html" class="menu__link">
+                                        <svg>
+                                            <use xlink:href="#icon-m01"></use>
+                                        </svg>
+                                        <span>Game</span>
+                                    </a>
+                                </li>
+                                <li class="menu__item">
+                                    <a href="links.html" class="menu__link">
+                                        <svg>
+                                            <use xlink:href="#icon-m02"></use>
+                                        </svg>
+                                        <span>Social Networks</span>
+                                    </a>
+                                </li>
+                                <li class="menu__item">
+                                    <a href="items.html" class="menu__link">
+                                        <svg>
+                                            <use xlink:href="#icon-m03"></use>
+                                        </svg>
+                                        <span>ITEMS</span>
+                                    </a>
+                                </li>
+                                <li class="menu__item">
+                                    <a href="files.html" class="menu__link">
+                                        <svg>
+                                            <use xlink:href="#icon-m04"></use>
+                                        </svg>
+                                        <span>FILES</span>
+                                    </a>
+                                </li>
+                                <li class="menu__item">
+                                    <a href="links.html" class="menu__link">
+                                        <svg>
+                                            <use xlink:href="#icon-m05"></use>
+                                        </svg>
+                                        <span>FAQ</span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="menu__actions">
+                            <a class="menu__btn menu__btn--register style interact-button"
+                                id="connectButton">CONNECT</a>
+                        </div>
+                    </div>
+                    <button data-btn-menu class="icon-menu">
+                        <span></span>
+                    </button>
+                </div>
+            </div>
+        </header>
+
+        <main class="page">
+            <div class="preloader">
+                <img src="https://cdn.prod.website-files.com/63e68367601a460550796587/63e68367601a46536c79699d_robottarget.gif"
+                    loading="lazy" width="139" alt="" class="preloader__icon">
+            </div>
+            <style>
+                .preloader {
+                    display: -webkit-box;
+                    display: -webkit-flex;
+                    display: -moz-box;
+                    display: flex;
+                    -webkit-box-align: center;
+                    -webkit-align-items: center;
+                    -moz-box-align: center;
+                    align-items: center;
+                    -webkit-box-pack: center;
+                    -webkit-justify-content: center;
+                    -moz-box-pack: center;
+                    justify-content: center;
+                    width: 100%;
+                    position: fixed;
+                    top: 0;
+                    left: 0;
+                    z-index: 100;
+                    height: 100%;
+                    background: var(--main-bg);
+                    -webkit-animation: loading 0s linear 1.3s forwards;
+                    -moz-animation: loading 0s linear 1.3s forwards;
+                    animation: loading 0s linear 1.3s forwards;
+                }
+
+                @-webkit-keyframes loading {
+                    0% {}
+
+                    99% {}
+
+                    100% {
+                        display: none;
+                        opacity: 0;
+                        pointer-events: none;
+                        visibility: hidden;
+                    }
+                }
+
+                @-moz-keyframes loading {
+                    0% {}
+
+                    99% {}
+
+                    100% {
+                        display: none;
+                        opacity: 0;
+                        pointer-events: none;
+                        visibility: hidden;
+                    }
+                }
+
+                @keyframes loading {
+                    0% {}
+
+                    99% {}
+
+                    100% {
+                        display: none;
+                        opacity: 0;
+                        pointer-events: none;
+                        visibility: hidden;
+                    }
+                }
+            </style>
+            <section class="hero-block hero-block--1 mainscreen">
+                <div class="hero-block__container">
+                    <div class="main-table">
+                        <div class="mt__header">
+                            <h1 class="title">LEAD YOUR ARMY<br>
+                                STRIKE FROM THE SKY</h1>
+                            <div class="hero-block__descr">
+                                <span> FREE-TO-PLAY</span> FAST-PACED ACTION RTS
+                            </div>
+                        </div>
+                        <div class="mt__bottom">
+                            <div class="mt__button"><a href="files.html">PLAY FOR FREE</a></div>
+                            <div class="mt__social">
+                                <a href="https://rarible.com/genom3"><svg width="24" height="24" viewBox="0 0 24 24"
+                                        fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <path
+                                            d="M4.8 0H19.2C21.8499 0 24 2.15007 24 4.8V19.2C24 21.8499 21.8499 24 19.2 24H4.8C2.15007 24 0 21.8499 0 19.2V4.8C0 2.15007 2.15007 0 4.8 0Z"
+                                            fill="white" />
+                                        <path
+                                            d="M16.5596 11.9135C17.3158 11.718 17.9887 11.1509 17.9887 10.0133C17.9887 8.11962 16.3802 7.68063 14.3231 7.68063H6.12012V16.204H9.57112V13.3105H13.6662C14.2974 13.3105 14.6659 13.5605 14.6659 14.1789V16.2008H18.1201V14.07C18.1201 12.9132 17.4664 12.1794 16.5596 11.9135ZM13.7271 11.0131H9.57112V10.18H13.7271C14.1789 10.18 14.4544 10.2408 14.4544 10.5965C14.4544 10.9522 14.1789 11.0131 13.7271 11.0131Z"
+                                            fill="#1F2122" />
+                                    </svg>
+                                </a>
+                                <a href="https://www.linkedin.com/company/genom2"><svg width="24" height="24"
+                                        viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <path
+                                            d="M20.4491 20.4496H16.8931V14.8805C16.8931 13.5525 16.8694 11.8429 15.0436 11.8429C13.1915 11.8429 12.9081 13.2899 12.9081 14.7838V20.4492H9.35204V8.99689H12.7658V10.562H12.8136C13.1553 9.97782 13.649 9.49726 14.2421 9.17149C14.8352 8.84572 15.5056 8.68693 16.1819 8.71203C19.7861 8.71203 20.4506 11.0828 20.4506 14.167L20.4491 20.4496ZM5.33963 7.43144C4.93148 7.43151 4.53248 7.31055 4.19308 7.08385C3.85368 6.85715 3.58912 6.53489 3.43287 6.15783C3.27661 5.78077 3.23567 5.36584 3.31522 4.96551C3.39477 4.56517 3.59125 4.19742 3.8798 3.90876C4.16835 3.6201 4.53602 3.42348 4.9363 3.34378C5.33659 3.26408 5.75152 3.30488 6.12863 3.46101C6.50574 3.61713 6.82808 3.88158 7.05489 4.22092C7.28171 4.56025 7.40281 4.95922 7.40288 5.36738C7.40293 5.63839 7.3496 5.90675 7.24594 6.15715C7.14228 6.40754 6.99031 6.63507 6.79872 6.82674C6.60713 7.0184 6.37967 7.17045 6.12931 7.27421C5.87896 7.37796 5.61063 7.43139 5.33963 7.43144ZM7.11765 20.4496H3.5579V8.99689H7.11765V20.4496ZM22.222 0.00163456H1.77099C1.30681 -0.00360389 0.859536 0.175663 0.527458 0.500042C0.195381 0.824421 0.00566506 1.26737 0 1.73156V22.2681C0.00547116 22.7325 0.195065 23.1758 0.527132 23.5005C0.859198 23.8252 1.30658 24.0048 1.77099 23.9999H22.222C22.6873 24.0057 23.1359 23.8266 23.4693 23.5019C23.8027 23.1772 23.9936 22.7334 24 22.2681V1.73008C23.9934 1.26497 23.8024 0.821515 23.469 0.497144C23.1356 0.172773 22.6871 -0.00598143 22.222 0.000152822"
+                                            fill="white" />
+                                    </svg>
+                                </a>
+                                <a href="https://discord.gg/genom"><svg width="24" height="19" viewBox="0 0 24 19"
+                                        fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <g clip-path="url(#clip0_0_24)">
+                                            <path
+                                                d="M20.104 1.69159C18.5918 0.974144 16.9683 0.445336 15.2705 0.142276C15.2396 0.139183 15.2087 0.151553 15.1932 0.182478C14.986 0.565941 14.7541 1.06383 14.5902 1.45966C12.7656 1.17515 10.9504 1.17515 9.16292 1.45966C8.99902 1.05764 8.7609 0.565941 8.55062 0.182478C8.53516 0.154645 8.50423 0.139183 8.47331 0.142276C6.77555 0.445336 5.15202 0.974144 3.63981 1.69159C3.62435 1.69778 3.61507 1.70705 3.60579 1.71942C0.528809 6.46942 -0.31543 11.105 0.0989583 15.6818C0.0989583 15.7035 0.111328 15.7251 0.129882 15.7375C2.16162 17.2775 4.12842 18.2145 6.05811 18.833C6.08903 18.8423 6.12305 18.833 6.1416 18.8052C6.59928 18.162 7.00749 17.4816 7.35693 16.7673C7.37549 16.7271 7.35693 16.6776 7.31364 16.659C6.67041 16.4055 6.05501 16.0993 5.46126 15.7468C5.41488 15.7189 5.41178 15.6509 5.45508 15.6169C5.57878 15.521 5.70247 15.4221 5.82308 15.32C5.84473 15.3015 5.87565 15.2984 5.90039 15.3076C9.7876 17.1415 13.9933 17.1415 17.8341 15.3076C17.862 15.2953 17.8898 15.3015 17.9115 15.32C18.0321 15.419 18.1558 15.521 18.2826 15.6169C18.3258 15.6509 18.3228 15.7189 18.2764 15.7468C17.6826 16.1055 17.0672 16.4055 16.4209 16.659C16.3807 16.6745 16.3621 16.7271 16.3807 16.7673C16.7394 17.4816 17.1445 18.162 17.5929 18.8052C17.6115 18.833 17.6455 18.8423 17.6764 18.833C19.6185 18.2145 21.5853 17.2775 23.617 15.7375C23.6356 15.7251 23.6449 15.7035 23.6479 15.6818C24.1427 10.3906 22.8192 5.79527 20.1349 1.72252C20.1287 1.70705 20.1195 1.69778 20.104 1.69159ZM7.93522 12.8955C6.76628 12.8955 5.80143 11.7853 5.80143 10.4216C5.80143 9.06089 6.74772 7.95071 7.93522 7.95071C9.13509 7.95071 10.0907 9.07017 10.0721 10.4216C10.0721 11.7853 9.12581 12.8955 7.93522 12.8955ZM15.8271 12.8955C14.6582 12.8955 13.6934 11.7853 13.6934 10.4216C13.6934 9.06089 14.6396 7.95071 15.8271 7.95071C17.027 7.95071 17.9826 9.07017 17.964 10.4216C17.964 11.7853 17.027 12.8955 15.8271 12.8955Z"
+                                                fill="white" />
+                                        </g>
+                                        <defs>
+                                            <clipPath id="clip0_0_24">
+                                                <rect width="23.75" height="19" fill="white" />
+                                            </clipPath>
+                                        </defs>
+                                    </svg>
+                                </a>
+                                <a href="https://x.com/genomthegame"><svg width="24" height="22" viewBox="0 0 24 22"
+                                        fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <g clip-path="url(#clip0_0_27)">
+                                            <path
+                                                d="M18.8914 0H22.5716L14.5315 9.08796L23.99 21.4545H16.584L10.7834 13.9543L4.14621 21.4545H0.463928L9.06366 11.734L-0.0100098 0H7.58399L12.8272 6.85556L18.8914 0ZM17.5998 19.276H19.639L6.47595 2.06403H4.28766L17.5998 19.276Z"
+                                                fill="white" />
+                                        </g>
+                                        <defs>
+                                            <clipPath id="clip0_0_27">
+                                                <rect width="24" height="21.4545" fill="white"
+                                                    transform="translate(-0.0100098)" />
+                                            </clipPath>
+                                        </defs>
+                                    </svg>
+                                </a>
+                            </div>
+                        </div>
+                        <div class="alpha__section">
+                            <div class="alpha__body">
+                                <img src="images/mainLogo.png" alt="" />
+                                <div class="alpha__table ">
+                                    <h1 class="title">ALPHA CHAMPIONSHIP</h1>
+                                    <p>CLAIM UP TO $1,000.00 USD</p>
+                                    <a href="files.html"><svg width="16" height="17" viewBox="0 0 16 17" fill="none"
+                                            xmlns="http://www.w3.org/2000/svg">
+                                            <path
+                                                d="M15.532 1.62397C15.212 1.28397 14.758 1.08796 14.29 1.08796H12.8C12.806 0.819949 12.81 0.543972 12.81 0.259949H3.2C3.2 0.543933 3.20399 0.819949 3.21 1.08796H1.71C1.24199 1.08796 0.788009 1.28397 0.468009 1.62397C0.143985 1.966 -0.0239833 2.43397 0.00398549 2.908C0.271993 7.376 2.57801 10.18 6.23398 10.596L5.52598 13.06C4.68399 13.06 4.00199 13.742 4.00199 14.584V16.26H12.01V14.584C12.01 13.742 11.328 13.06 10.486 13.06L9.77801 10.596C13.426 10.176 15.73 7.37401 15.996 2.908C16.024 2.436 15.856 1.968 15.532 1.62397ZM1.60199 2.81198C1.6 2.768 1.61801 2.738 1.63399 2.72198C1.66399 2.68999 1.7 2.68999 1.71 2.68999H3.28602C3.52402 5.836 4.21801 7.61999 4.89203 8.628C2.32602 7.55198 1.71399 4.678 1.60199 2.81198ZM11.118 8.62198C11.792 7.61198 12.484 5.82999 12.722 2.688H14.292C14.304 2.688 14.338 2.688 14.368 2.71999C14.384 2.736 14.402 2.766 14.4 2.80999C14.286 4.676 13.676 7.54198 11.118 8.62198Z"
+                                                fill="#FFD883" />
+                                        </svg>
+                                        SIGN UP NOW</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <section class="hero-block hero-block--1 secondscreen">
+                <div class="hero-block__container">
+                    <div class="hbc__column">
+                        <h2 class="title">FREE TO PLAY</h2>
+                        <div class="block__descr">
+                            EPIC ONE-VS-ONE BATTLES
+                        </div>
+                        <p>Step in the first Action RTS and become the Alpha.</p>
+                        <a href="files.html">PLAY FOR FREE</a>
+                    </div>
+                </div>
+            </section>
+            <section class="block block--video block--1 block--bottom">
+                <div class="block__bg">
+                    <video autoplay loop muted playsinline>
+                        <source
+                            src="https://cdn.prod.website-files.com/63e68367601a460550796587/63eeb80096c02b4b1137ecfa_Engage (Game Capture2)-transcode.mp4">
+                        <source
+                            src="https://cdn.prod.website-files.com/63e68367601a460550796587/63eeb80096c02b4b1137ecfa_Engage (Game Capture2)-transcode.webm">
+                    </video>
+                </div>
+                <div class="block__container">
+                    <div class="block__wrapper">
+                        <div class="block__inner">
+                            <h2 class="title">
+                                MADE FOR<br> COMPETITION
+                            </h2>
+                            <div class="block__descr">
+                                MAKE EPIC PLAYS
+                            </div>
+                            <div class="block__text">
+                                <p>Activate powerful abilities, think faster than your opponent, and take<br>
+                                    down turrets as you battle your way to victory.</p>
+                            </div>
+                            <a href="index.html" class="button">
+                                <svg width="10" height="11" viewBox="0 0 10 11" fill="none"
+                                    xmlns="http://www.w3.org/2000/svg">
+                                    <g clip-path="url(#clip0_0_75)">
+                                        <g clip-path="url(#clip1_0_75)">
+                                            <g clip-path="url(#clip2_0_75)">
+                                                <path
+                                                    d="M9.24497 5.08402L1.245 0.584039C1.16897 0.541396 1.08313 0.519334 0.995967 0.520036C0.908802 0.520737 0.823329 0.544178 0.747999 0.588039C0.672481 0.632056 0.609834 0.695117 0.566315 0.770923C0.522797 0.84673 0.49993 0.932628 0.5 1.02004V10.02C0.49993 10.1074 0.522797 10.1933 0.566315 10.2691C0.609834 10.3449 0.672481 10.408 0.747999 10.452C0.82458 10.4964 0.911488 10.5198 0.999999 10.52C1.084 10.52 1.169 10.499 1.245 10.456L9.24497 5.95602C9.40197 5.86702 9.49997 5.70102 9.49997 5.52002C9.49997 5.33902 9.40197 5.17302 9.24497 5.08402Z"
+                                                    fill="white" />
+                                            </g>
+                                        </g>
+                                    </g>
+                                    <defs>
+                                        <clipPath id="clip0_0_75">
+                                            <rect width="10" height="10" fill="white"
+                                                transform="translate(0 0.52002)" />
+                                        </clipPath>
+                                        <clipPath id="clip1_0_75">
+                                            <rect width="10" height="10" fill="white"
+                                                transform="translate(0 0.52002)" />
+                                        </clipPath>
+                                        <clipPath id="clip2_0_75">
+                                            <rect width="10" height="10" fill="white"
+                                                transform="translate(0 0.52002)" />
+                                        </clipPath>
+                                    </defs>
+                                </svg>DISCOVER GAMEPLAY
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <section class="units">
+                <div class="units__container">
+                    <div class="units__row">
+                        <div class="units__left">
+                            <div class="units__image-wrap">
+                                <div class="units__image">
+                                    <img srcset="images/man@2x.png" src="images/man.png" alt="">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="units__content">
+                            <h2 class="title">
+                                YOUR <br> Units
+                            </h2>
+                            <div class="units__descr">
+                                MAKE THE DIFFERENCE
+                            </div>
+                            <div class="units__text">
+                                Build and upgrade your ultimate Battle Deck to defeat your enemies
+                                with unique troops, abilities and skins.
+                                No two armies will look the same.
+                            </div>
+                            <a href="index.html" class="button pc">
+                                002 | DISCOVER ITEMS
+                            </a>
+                        </div>
+                    </div>
+                    <a href="index.html" class="button mob">
+                        002 | DISCOVER ITEMS
+                    </a>
+                </div>
+            </section>
+            <section class="block block--video block--1 ">
+                <div class="block__bg">
+                    <video autoplay="" loop="" muted="" playsinline="" data-wf-ignore="true" data-object-fit="cover">
+                        <source
+                            src="https://cdn.prod.website-files.com/63e68367601a460550796587/63eea2b859763575f6fa434d_Flash Block (Game Capture)-transcode.mp4"
+                            data-wf-ignore="true">
+                        <source
+                            src="https://cdn.prod.website-files.com/63e68367601a460550796587/63eea2b859763575f6fa434d_Flash Block (Game Capture)-transcode.webm"
+                            data-wf-ignore="true">
+                    </video>
+                </div>
+                <div class="block__container">
+                    <div class="block__wrapper">
+                        <div class="block__inner">
+                            <a href="index.html" class="button button--square">
+                                <img style="filter:invert()"
+                                    src="https://cdn.prod.website-files.com/63e68367601a460550796587/63e68367601a467ed6796987_loader.gif"
+                                    loading="lazy" width="19" alt="" class="image-164">
+                                <span>COMING IN BETA VERSION</span>
+                            </a>
+                            <h2 class="title title--small">
+                                DYNAMIC MAPS, NEW UNITS,<br>
+                                POWERS AND GAME MODES
+                            </h2>
+                            <div class="block__descr">
+                                CURRENTLY IN ACTIVE DEVELOPMENT
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <section class="ready">
+                <div class="ready__container">
+                    <h2 class="ready__title title title--small">
+                        GET READY
+                    </h2>
+                    <div class="ready__row">
+                        <div class="ready__item">
+                            <div class="ready__item-bg">
+                                <img srcset="images/r01@2x.jpg 2x" src="images/r01.jpg" alt="">
+                            </div>
+                            <div class="ready__item-content">
+                                <div class="ready__item-inner">
+                                    <h4 class="ready__item-title">Play the beta right now!</h4>
+                                    <div class="ready__item-buttons">
+                                        <a href="files.html" class="button">
+                                            <img src="images/w01.svg" alt="">
+                                            <span>
+                                                WINDOWS
+                                            </span>
+                                        </a>
+                                        <a href="files.html" class="button">
+                                            <img src="images/w02.svg" alt="">
+                                            <span>
+                                                MACOS
+                                            </span>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="ready__item2">
+                            <div class="ready__item2-top">
+                                <div class="ready__item2__image">
+                                    <img srcset="images/r02@2x.jpg 2x" src="images/r02.jpg" alt="">
+                                </div>
+                            </div>
+                            <div class="ready__item2-bottom">
+                                <h4 class="ready__item2-title">
+                                    Patch Notes
+                                </h4>
+                                <button class="button">
+                                    <img src="images/w03.svg" alt="">
+                                    <span>READ NOW</span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+        <footer class="footer">
+            <div class="footer__container">
+                <div data-goto=".header" class="footer__to-top">
+                    <svg>
+                        <use xlink:href="#icon-top"></use>
+                    </svg>
+                </div>
+                <div class="footer__row">
+                    <ul class="footer__list">
+                        <li>
+                            <a href="index.html">
+                                ▸ HOME
+                            </a>
+                        </li>
+                        <li>
+                            <a href="https://genom2.com/game">
+                                ▸ GAME
+                            </a>
+                        </li>
+                        <li>
+                            <a href="links.html">
+                                ▸ Social Networks
+                            </a>
+                        </li>
+                    </ul>
+                    <ul class="footer__list">
+                        <li>
+                            <a href="items.html">
+                                ▸ ITEMS
+                            </a>
+                        </li>
+                        <li>
+                            <a href="https://genom-1.gitbook.io/genom">
+                                ▸ FAQ
+                            </a>
+                        </li>
+                    </ul>
+                    <div class="footer__right">
+                        <a href="https://discord.gg/genom" class="footer__btn">
+                            CONTACT SUPPORT
+                        </a>
+                        <div class="footer__links">
+                            <a href="index.html" class="footer__link">> ArgOn [C] 2023</a>
+                            <a href="index.html" class="footer__link">> PRIVACY POLICY</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </footer>
+    </div>
+</body>
+
+</html>
